@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Hi</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/reset.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/layout.css" %}">
+    <script type="text/javascript" src="{% static "js/jquery-1.9.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/layout.js" %}"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="header">
+        Header
+      </div>
+
+      <div id="content">
+        Center
+      </div>
+
+      <div id="left-sidebar">
+        Left
+      </div>
+      <div id="right-sidebar">
+        <p>Right</p>
+      </div>
+
+      <div id="footer">
+        Footer
+      </div>
+  </body>
+</html>
