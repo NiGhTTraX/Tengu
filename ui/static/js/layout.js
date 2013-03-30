@@ -1,27 +1,50 @@
-var content, leftSidebar, rightSidebar, header, footer;
+var content, leftSidebar, rightSidebar, header, footer, resizeHandle;
 var contentPaddingX, contentPaddingY;
 var headerHeight, footerHeight;
+var oldWindowHeight, oldWindowWidth;
+var windowHeight, windowWidth;
 
-function adjustLayout() {
-	var windowWidth = $(window).width();
-	var windowHeight = $(window).height();
+function adjustLeftSidebar() {
+	var handlePosition = resizeHandle.position().top;
+	var handleHeight = resizeHandle.height();
 
-	var leftSidebarWidth = left_sidebar.outerWidth();
-	var rightSidebarWidth = right_sidebar.outerWidth();
+	$("#market-tree").height(handlePosition);
+	$("#items").height(leftSidebar.height() - handlePosition - handleHeight);
+}
 
-	left_sidebar.height(windowHeight - headerHeight - footerHeight);
-	right_sidebar.height(windowHeight - headerHeight - footerHeight);
+function adjustColumns() {
+	var leftSidebarWidth = leftSidebar.outerWidth();
+	var rightSidebarWidth = rightSidebar.outerWidth();
+
+	leftSidebar.height(windowHeight - headerHeight - footerHeight);
+	rightSidebar.height(windowHeight - headerHeight - footerHeight);
 
 	content.width(windowWidth - leftSidebarWidth - rightSidebarWidth -
 			contentPaddingX);
 	content.height(windowHeight - headerHeight - footerHeight -
 			contentPaddingY);
+
+	// If the window has resized, adjust the resize handler.
+	resizeHandle.css("top",
+			resizeHandle.position().top - (oldWindowHeight - windowHeight) / 2);
 }
 
-$(window).ready(function() {
+function adjustLayout() {
+	windowWidth = $(window).width();
+	windowHeight = $(window).height();
+
+	adjustColumns();
+	adjustLeftSidebar();
+
+	oldWindowWidth = windowWidth;
+	oldWindowHeight = windowHeight;
+}
+
+$(document).ready(function() {
 	content = $("#content");
-	left_sidebar = $("#left-sidebar");
-	right_sidebar = $("#right-sidebar");
+	leftSidebar = $("#left-sidebar");
+	rightSidebar = $("#right-sidebar");
+	resizeHandle = $("#resize-handle");
 
 	headerHeight = $("#header").outerHeight();
 	footerHeight = $("#footer").outerHeight();
@@ -29,10 +52,18 @@ $(window).ready(function() {
 	contentPaddingX = content.outerWidth() - content.width();
 	contentPaddingY = content.outerHeight() - content.height();
 
+	oldWindowHeight = $(window).height();
+	oldWindowWidth = $(window).width();
+
 	adjustLayout();
 
 	$(window).resize(function() {
 		adjustLayout();
 	});
-});
 
+	$("#resize-handle").draggable({
+			axis: "y",
+			containment: $("#left-sidebar"),
+			drag: adjustLeftSidebar
+	});
+});
