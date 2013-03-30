@@ -5,7 +5,7 @@ import json
 
 def home(request):
   # Get the stats widgets positions.
-  widgetPositions = ["stats1.html", "stats2.html"]
+  widgetPositions = ["stats1", "stats2"]
 
   if "widgetPositions" in request.COOKIES:
     try:
