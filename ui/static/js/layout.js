@@ -12,6 +12,12 @@ function adjustLeftSidebar() {
 
 	$("#market-tree").height(handlePosition);
 	$("#items").height(leftSidebar.height() - handlePosition - handleHeight);
+
+	// Adjust the resize handler.
+	var distance = Math.ceil((oldWindowHeight - windowHeight) / 2);
+	var top = resizeHandle.position().top;
+	if (top - distance >= 0)
+		resizeHandle.css("top", top - distance);
 }
 
 function adjustColumns() {
@@ -27,10 +33,6 @@ function adjustColumns() {
 			contentPaddingX);
 	content.height(windowHeight - headerHeight - footerHeight -
 			contentPaddingY);
-
-	// If the window has resized, adjust the resize handler.
-	resizeHandle.css("top",
-			resizeHandle.position().top - (oldWindowHeight - windowHeight) / 2);
 }
 
 function adjustLayout() {
