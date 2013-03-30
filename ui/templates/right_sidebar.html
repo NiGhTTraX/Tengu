@@ -1,5 +1,5 @@
 <ul id="stats">
   {% for widget in widgetPositions %}
-    {% include widget %}
+    {% include widget|add:".html" %}
   {% endfor %}
 </ul>

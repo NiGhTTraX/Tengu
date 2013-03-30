@@ -9,8 +9,7 @@ def home(request):
 
   if "widgetPositions" in request.COOKIES:
     try:
-      cookie = json.loads(request.COOKIES["widgetPositions"])
-      widgetPositions = [x + ".html" for x in cookie]
+      widgetPositions = json.loads(request.COOKIES["widgetPositions"])
     except ValueError:
       pass
 
