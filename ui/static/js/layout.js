@@ -3,14 +3,11 @@ var contentPaddingX, contentPaddingY;
 var headerHeight, footerHeight;
 
 function adjustLayout() {
-	var windowWidth = $(this).width();
-	var windowHeight = $(this).height();
+	var windowWidth = $(window).width();
+	var windowHeight = $(window).height();
 
 	var leftSidebarWidth = left_sidebar.outerWidth();
 	var rightSidebarWidth = right_sidebar.outerWidth();
-
-	console.log(leftSidebarWidth + " " + rightSidebarWidth);
-	console.log(windowWidth + " " + contentPaddingX);
 
 	left_sidebar.height(windowHeight - headerHeight - footerHeight);
 	right_sidebar.height(windowHeight - headerHeight - footerHeight);
