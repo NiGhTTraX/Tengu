@@ -1,0 +1,36 @@
+/* Stats widget */
+.stats-widget {
+	width: 276px;
+	border: 2px solid #323431;
+	margin-bottom: 5px;
+}
+
+.stats-widget div.title {
+	border-bottom: 2px solid #323431;
+	padding: 5px;
+}
+
+.stats-widget div.title div.toggle {
+	float: left;
+	width: 12px;
+	height: 12px;
+	margin-right: 5px;
+}
+
+.collapse {
+	background: url("../images/105_32_4.png");
+}
+
+.expand {
+	background: url("../images/105_32_5.png");
+}
+
+.stats-widget div.title h1 {
+	font-size: 12px;
+	font-weight: bold;
+	color: #c1c1c1;
+}
+
+.stats-widget div.content {
+	padding: 5px;
+}

@@ -1,5 +1,7 @@
 var content, leftSidebar, rightSidebar, header, footer, resizeHandle;
 var contentPaddingX, contentPaddingY;
+var leftSidebarPaddingX, leftSidebarPaddingY;
+var rightSidebarPaddingX, rightSidebarPaddingY;
 var headerHeight, footerHeight;
 var oldWindowHeight, oldWindowWidth;
 var windowHeight, windowWidth;
@@ -16,8 +18,10 @@ function adjustColumns() {
 	var leftSidebarWidth = leftSidebar.outerWidth();
 	var rightSidebarWidth = rightSidebar.outerWidth();
 
-	leftSidebar.height(windowHeight - headerHeight - footerHeight);
-	rightSidebar.height(windowHeight - headerHeight - footerHeight);
+	leftSidebar.height(windowHeight - headerHeight - footerHeight -
+			leftSidebarPaddingX);
+	rightSidebar.height(windowHeight - headerHeight - footerHeight -
+			rightSidebarPaddingY);
 
 	content.width(windowWidth - leftSidebarWidth - rightSidebarWidth -
 			contentPaddingX);
@@ -51,6 +55,11 @@ $(document).ready(function() {
 
 	contentPaddingX = content.outerWidth() - content.width();
 	contentPaddingY = content.outerHeight() - content.height();
+
+	leftSidebarPaddingX = leftSidebar.outerWidth() - leftSidebar.width();
+	leftSidebarPaddingY = leftSidebar.outerHeight() - leftSidebar.height();
+	rightSidebarPaddingY = rightSidebar.outerHeight() - rightSidebar.height();
+	rightSidebarPaddingX = rightSidebar.outerWidth() - rightSidebar.width();
 
 	oldWindowHeight = $(window).height();
 	oldWindowWidth = $(window).width();
