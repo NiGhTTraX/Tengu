@@ -48,4 +48,5 @@ html, body {
 	float: right;
 	padding: 10px;
 	border: 1px solid #fff;
+	overflow: auto;
 }
