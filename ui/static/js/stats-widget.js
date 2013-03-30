@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$("#stats").sortable({
 			axis: "y",
 			containment: $("#right-sidebar"),
+			handle: "h1",
 			update: updateWidgetPositions
 	});
 

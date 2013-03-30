@@ -29,6 +29,7 @@
 	font-size: 12px;
 	font-weight: bold;
 	color: #c1c1c1;
+	cursor: move;
 }
 
 .stats-widget div.content {
