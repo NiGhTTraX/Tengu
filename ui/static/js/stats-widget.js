@@ -1,9 +1,18 @@
-function updateWidgetPositions() {
-	var widgetPositions = $("#stats").sortable("toArray");
+function updateWidgets() {
+	var widgets = $("#stats").sortable("toArray");
+	var widgetStatuses = Array(widgets.length);
+
+	for (var i = 0, l = widgets.length; i < l; i++) {
+		widgetStatuses[i] = $("#" + widgets[i] + " div.content").is(":visible");
+	}
+
 	$.ajax({
 			type: "GET",
 			url: "/updateWidgetPositions/",
-			data: {"widgetPositions": widgetPositions}
+			data: {
+					"widgets": widgets,
+					"widgetStatuses": widgetStatuses
+			}
 	});
 }
 
@@ -12,12 +21,11 @@ $(document).ready(function() {
 			axis: "y",
 			containment: $("#right-sidebar"),
 			handle: "h1",
-			update: updateWidgetPositions
+			update: updateWidgets
 	});
 
 	$(".stats-widget div.toggle").disableSelection().click(function() {
-		$("div.content", $(this).parent().parent()).toggle(100);
+		$("div.content", $(this).parent().parent()).toggle(100, updateWidgets);
 		$(this).toggleClass("collapse expand");
-		return false;
 	});
 });

@@ -1,10 +1,9 @@
-<li class="stats-widget" id="stats1">
-<div class="title">
-  <div class="toggle collapse">&nbsp;</div>
-  <h1>Capacitor</h1>
-</div>
-<div class="content">
-  Test 2
-</div>
-</li>
+{% extends "stats_widget.html" %}
 
+{% block widget_id %}stats1{% endblock %}
+
+{% block widget_title %}Capacitor{% endblock %}
+
+{% block widget_content %}
+not stable!
+{% endblock %}

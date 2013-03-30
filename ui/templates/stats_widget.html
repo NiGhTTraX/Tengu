@@ -1,0 +1,12 @@
+<li class="stats-widget" id="{% block widget_id %}stats_1{% endblock %}">
+<div class="title">
+	<div class="toggle {% if widget.1 %}collapse{% else %}expand{% endif %}">&nbsp;</div>
+  <h1>{% block widget_title%}Title{% endblock %}</h1>
+</div>
+<div class="content" style="display: {% if widget.1 %}block{% else %}none{% endif %}">
+  {% block widget_content %}
+    Content
+  {% endblock %}
+</div>
+</li>
+
