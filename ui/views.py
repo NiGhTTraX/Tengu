@@ -10,7 +10,11 @@ def home(request):
 
   if "widgets" in request.COOKIES and "widgetStatuses" in request.COOKIES:
     try:
-      widgetPositions = json.loads(request.COOKIES["widgets"])
+      cookie = json.loads(request.COOKIES["widgets"])
+      if sorted(cookie) != sorted(widgetPositions): # sanity check
+        raise ValueError
+      widgetPositions = cookie
+
       cookie = json.loads(request.COOKIES["widgetStatuses"])
       widgetStatuses = [x == "true" for x in cookie]
     except ValueError: pass
