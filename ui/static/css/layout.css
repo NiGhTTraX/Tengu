@@ -50,5 +50,5 @@ html, body {
 	padding: 10px;
 	border: 1px solid #fff;
 	overflow-y: auto;
-	overflow-x: auto;
+	overflow-x: hidden;
 }
