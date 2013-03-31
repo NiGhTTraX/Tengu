@@ -25,7 +25,7 @@ function adjustColumns() {
 	var rightSidebarWidth = rightSidebar.outerWidth();
 
 	leftSidebar.height(windowHeight - headerHeight - footerHeight -
-			leftSidebarPaddingX);
+			leftSidebarPaddingY);
 	rightSidebar.height(windowHeight - headerHeight - footerHeight -
 			rightSidebarPaddingY);
 
@@ -60,8 +60,8 @@ $(document).ready(function() {
 
 	leftSidebarPaddingX = leftSidebar.outerWidth() - leftSidebar.width();
 	leftSidebarPaddingY = leftSidebar.outerHeight() - leftSidebar.height();
-	rightSidebarPaddingY = rightSidebar.outerHeight() - rightSidebar.height();
 	rightSidebarPaddingX = rightSidebar.outerWidth() - rightSidebar.width();
+	rightSidebarPaddingY = rightSidebar.outerHeight() - rightSidebar.height();
 
 	oldWindowHeight = $(window).height();
 	oldWindowWidth = $(window).width();
