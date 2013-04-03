@@ -16,4 +16,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'ui.views.home'),
     url(r'^updateWidgetPositions/$', 'ui.views.updateWidgetPositions'),
+    url(r'^updateLeftSidebarResizeHandler/$',
+        'ui.views.updateLeftSidebarResizeHandler'),
 )

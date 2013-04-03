@@ -16,8 +16,21 @@ function adjustLeftSidebar() {
 	// Adjust the resize handler.
 	var distance = Math.ceil((oldWindowHeight - windowHeight) / 2);
 	var top = resizeHandle.position().top;
-	if (top - distance >= 0)
-		resizeHandle.css("top", top - distance);
+	if (top - distance >= 0) {
+		top -= distance;
+		resizeHandle.css("top", top);
+	}
+
+}
+
+function updateResizeHandle() {
+	var top = resizeHandle.position().top;
+
+	$.ajax({
+			url: "/updateLeftSidebarResizeHandler/",
+			method: "GET",
+			data: {"top": top}
+	});
 }
 
 function adjustColumns() {
@@ -75,6 +88,7 @@ $(document).ready(function() {
 	$("#resize-handle").draggable({
 			axis: "y",
 			containment: $("#left-sidebar"),
-			drag: adjustLeftSidebar
+			drag: adjustLeftSidebar,
+			stop: updateResizeHandle
 	});
 });
