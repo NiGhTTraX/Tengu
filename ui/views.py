@@ -30,7 +30,6 @@ def updateWidgetPositions(request):
   if request.method != "GET":
     raise Http404
 
-  print request.GET
   if "widgets[]" not in request.GET or "widgetStatuses[]" not in request.GET:
     raise Http404
 
@@ -45,3 +44,4 @@ def updateWidgetPositions(request):
       max_age = 30 * 24 * 3600)
 
   return response
+
