@@ -1,0 +1,5 @@
+/* Left sidebar CSS */
+#resize-handle {
+	background-color: #999;
+	cursor: row-resize;
+}

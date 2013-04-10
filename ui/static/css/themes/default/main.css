@@ -1,0 +1,28 @@
+/* Main CSS */
+html, body {
+	font-family: arial, sans-serif;
+	font-size: small;
+	color: #666;
+}
+
+#container {
+	background-color: #1f1f1d;
+}
+
+#header {
+	border-bottom: 6px double gray;
+}
+
+#footer {
+	background: #ddd;
+	border-top: 6px double gray;
+}
+
+#content{
+	border: 2px double #999;
+}
+
+#right-sidebar {
+	border: 1px solid #fff;
+}
+
