@@ -16,11 +16,12 @@ function adjustLeftSidebar() {
 	// Adjust the resize handler.
 	var distance = Math.ceil((oldWindowHeight - windowHeight) / 2);
 	var top = resizeHandle.position().top;
-	if (top - distance >= 0) {
+	if (top - distance >= 0)
 		top -= distance;
-		resizeHandle.css("top", top);
-	}
+	if (top > leftSidebar.height())
+		top = leftSidebar.height() - handleHeight;
 
+	resizeHandle.css("top", top);
 }
 
 function updateResizeHandle() {
