@@ -13,5 +13,5 @@
 #resize-handle {
 	position: absolute;
 	height: 5px;
-	width: 200px;
+	width: 100%;
 }

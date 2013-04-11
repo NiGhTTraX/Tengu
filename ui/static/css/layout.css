@@ -25,13 +25,13 @@ html, body {
 
 #content{
 	position: absolute;
-	left: 200px;
+	left: 300px;
 	top: 36px;
 	padding: 10px 20px;
 }
 
 #left-sidebar {
-	width: 200px;
+	width: 300px;
 	position: relative;
 	float: left;
 }
