@@ -10,9 +10,6 @@ function adjustLeftSidebar() {
 	var handlePosition = resizeHandle.position().top;
 	var handleHeight = resizeHandle.height();
 
-	$("#market-tree").height(handlePosition);
-	$("#items").height(leftSidebar.height() - handlePosition - handleHeight);
-
 	// Adjust the resize handler.
 	var distance = Math.ceil((oldWindowHeight - windowHeight) / 2);
 	var top = resizeHandle.position().top;
@@ -21,7 +18,11 @@ function adjustLeftSidebar() {
 	if (top > leftSidebar.height())
 		top = leftSidebar.height() - handleHeight;
 
+	$("#market-tree").height(handlePosition);
+	$("#items").height(leftSidebar.height() - handlePosition - handleHeight);
+
 	resizeHandle.css("top", top);
+	updateResizeHandle();
 }
 
 function updateResizeHandle() {
