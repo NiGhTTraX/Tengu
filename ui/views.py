@@ -89,7 +89,7 @@ def home(request):
 
   return render(request, 'index.html', locals())
 
-def updateWidgetPositions(request):
+def updateWidgets(request):
   """Updates the stats widgets in the right sidebar.
 
   This function retrieves the position and status of the stats widget via a GET

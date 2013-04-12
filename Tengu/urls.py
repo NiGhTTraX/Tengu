@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'ui.views.home'),
-    url(r'^updateWidgetPositions/$', 'ui.views.updateWidgetPositions'),
+    url(r'^updateWidgets/$', 'ui.views.updateWidgets'),
     url(r'^updateLeftSidebarResizeHandler/$',
         'ui.views.updateLeftSidebarResizeHandler'),
     url(r'^updateMarketTree/$', 'ui.views.updateMarketTree'),

@@ -8,7 +8,7 @@ function updateWidgets() {
 
 	$.ajax({
 			type: "GET",
-			url: "/updateWidgetPositions/",
+			url: "/updateWidgets/",
 			data: {
 					"widgets": widgets,
 					"widgetStatuses": widgetStatuses
