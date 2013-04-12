@@ -5,8 +5,20 @@ from inv.models import MarketGroup
 import json
 
 
-def home(request):
-  # Get the stats widgets positions.
+def __getWidgets(request):
+  """Return the positions and statuses of the stats widgets.
+
+  Args:
+    request: Django request
+
+  Returns:
+    A list of tuples in the form (widget_name, widget_status). widget_status is
+    True if the widget is expanded, False otherwise. widget_name is the name of
+    the template, minus the .html extension (needs to be added in the template).
+
+  Excepts:
+    ValueError.
+  """
   widgetPositions = ["stats1", "stats2"]
   widgetStatuses = [True] * len(widgetPositions)
 
@@ -21,25 +33,30 @@ def home(request):
       widgetStatuses = [x == "true" for x in cookie]
     except ValueError: pass
 
-  widgets = zip(widgetPositions, widgetStatuses)
+  return zip(widgetPositions, widgetStatuses)
 
-  # Get the left sidebar resize handler position.
+def __getResizeHandler(request):
+  """Returns the left sidebar resize handler position."""
   resizeHandlerTop = None
   if "leftSidebarResizeHandle" in request.COOKIES:
     try:
-      resizeHandlerTop= int(request.COOKIES["leftSidebarResizeHandle"])
+      resizeHandlerTop = int(request.COOKIES["leftSidebarResizeHandle"])
     except ValueError: pass
 
-  # Get the market groups.
-  marketGroups = []
-  marketGroupsToGet = [
-      211,    # Ammunition and Charges
-      157,    # Drones
-      24,     # Implants and Boosters
-      9,      # Ship Equipment
-      955     # Ship Modifications
-  ]
+  return resizeHandlerTop
 
+def __getMarketTree(request, marketGroupsToGet):
+  """Gets the market tree structure and status.
+
+  Params:
+    request: Django request.
+    marketGroupsToGet: A list of integer ids.
+
+  Returns:
+    A list of two elements. The first is the market tree and the second is the
+    expanded groups.
+  """
+  marketGroups = []
   for group in marketGroupsToGet:
     marketGroups.extend(buildMarketTree(MarketGroup.objects.get(pk=group)))
 
@@ -49,9 +66,35 @@ def home(request):
     cookie = json.loads(request.COOKIES["expandedMarketGroups"])
     expandedGroups = [long(x) for x in cookie]
 
+  return [marketGroups, expandedGroups]
+
+
+def home(request):
+  """Home page view."""
+  # Get the stats widgets.
+  widgets = __getWidgets(request)
+
+  # Get the left sidebar resize handler.
+  resizeHandlerTop = __getResizeHandler(request)
+
+  # Get the market groups.
+  marketGroupsToGet = [
+      211,    # Ammunition and Charges
+      157,    # Drones
+      24,     # Implants and Boosters
+      9,      # Ship Equipment
+      955     # Ship Modifications
+  ]
+  [marketGroups, expandedGroups] = __getMarketTree(request, marketGroupsToGet)
+
   return render(request, 'index.html', locals())
 
 def updateWidgetPositions(request):
+  """Updates the stats widgets in the right sidebar.
+
+  This function retrieves the position and status of the stats widget via a GET
+  request and stores them in cookies. The contents are dumped in JSON format.
+  """
   if not request.is_ajax():
     raise Http404
 
@@ -74,6 +117,7 @@ def updateWidgetPositions(request):
   return response
 
 def updateLeftSidebarResizeHandler(request):
+  """Updates the left sidebar resize handler."""
   if not request.is_ajax():
     raise Http404
 
@@ -95,6 +139,7 @@ def updateLeftSidebarResizeHandler(request):
   return response
 
 def updateMarketTree(request):
+  """Updates the market tree expanded groups."""
   if not request.is_ajax():
     raise Http404
 
