@@ -18,4 +18,5 @@ urlpatterns = patterns('',
     url(r'^updateWidgetPositions/$', 'ui.views.updateWidgetPositions'),
     url(r'^updateLeftSidebarResizeHandler/$',
         'ui.views.updateLeftSidebarResizeHandler'),
+    url(r'^updateMarketTree/$', 'ui.views.updateMarketTree'),
 )

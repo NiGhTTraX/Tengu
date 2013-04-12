@@ -1,5 +1,7 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
+from ui.utils import buildMarketTree
+from inv.models import MarketGroup
 import json
 
 
@@ -27,6 +29,25 @@ def home(request):
     try:
       resizeHandlerTop= int(request.COOKIES["leftSidebarResizeHandle"])
     except ValueError: pass
+
+  # Get the market groups.
+  marketGroups = []
+  marketGroupsToGet = [
+      211,    # Ammunition and Charges
+      157,    # Drones
+      24,     # Implants and Boosters
+      9,      # Ship Equipment
+      955     # Ship Modifications
+  ]
+
+  for group in marketGroupsToGet:
+    marketGroups.extend(buildMarketTree(MarketGroup.objects.get(pk=group)))
+
+  # Now get which ones should be expanded.
+  expandedGroups = []
+  if "expandedMarketGroups" in request.COOKIES:
+    cookie = json.loads(request.COOKIES["expandedMarketGroups"])
+    expandedGroups = [long(x) for x in cookie]
 
   return render(request, 'index.html', locals())
 
@@ -71,5 +92,17 @@ def updateLeftSidebarResizeHandler(request):
   response = HttpResponse("updated")
   response.set_cookie("leftSidebarResizeHandle", top, max_age = 30 * 24 * 3600)
 
+  return response
+
+def updateMarketTree(request):
+  if not request.is_ajax():
+    raise Http404
+
+  if request.method != "GET":
+    raise Http404
+
+  groups = json.dumps(request.GET.getlist("expandedGroups[]"))
+  response = HttpResponse("updated")
+  response.set_cookie("expandedMarketGroups", groups, max_age = 30 * 24 * 3600)
   return response
 
