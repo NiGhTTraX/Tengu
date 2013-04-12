@@ -4,21 +4,15 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class MarketGroup(models.Model):
   marketGroupID = models.AutoField(primary_key=True)
-  parentGroupID = models.ForeignKey("self", db_column="parentGroupID")
-  marketGroupName = models.CharField(max_length=200)
-  description = models.CharField(max_length=3000)
-  iconID = models.IntegerField()
-  hasTypes = models.BooleanField()
-  descriptionID = models.IntegerField()
-  dataID = models.IntegerField()
-  graphicID = models.IntegerField()
-  marketGroupNameID = models.IntegerField()
-
-  def __str__(self):
-    try:
-      return str(self.parentGroupID) + "/" + self.marketGroupName
-    except ObjectDoesNotExist:
-      return self.marketGroupName
+  parentGroupID = models.ForeignKey("self", db_column="parentGroupID", null=True)
+  marketGroupName = models.CharField(max_length=200, null=True)
+  description = models.CharField(max_length=3000, null=True)
+  iconID = models.IntegerField(null=True)
+  hasTypes = models.NullBooleanField()
+  descriptionID = models.IntegerField(null=True)
+  dataID = models.IntegerField(null=True)
+  graphicID = models.IntegerField(null=True)
+  marketGroupNameID = models.IntegerField(null=True)
 
 
 class Category(models.Model):
