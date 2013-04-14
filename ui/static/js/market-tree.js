@@ -26,6 +26,10 @@ $(document).ready(function() {
 			var height = top + nextMarketGroup.outerHeight() + $(this).outerHeight();
 			if (height > marketTree.height())
 				marketTree.scrollTop(marketTree.scrollTop() + top);
+		} else {
+			// We collapsed this group, so let's collapse all subgroups.
+			$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
+			$(".market-group", nextMarketGroup).hide();
 		}
 
 		updateMarketTree();
