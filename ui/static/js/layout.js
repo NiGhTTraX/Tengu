@@ -18,8 +18,8 @@ function adjustLeftSidebar() {
 	if (top > leftSidebar.height())
 		top = leftSidebar.height() - handleHeight;
 
-	$("#market-tree").height(handlePosition);
-	$("#items").height(leftSidebar.height() - handlePosition - handleHeight);
+	$("#left-sidebar-top").height(handlePosition);
+	$("#left-sidebar-bottom").height(leftSidebar.height() - handlePosition - handleHeight);
 
 	resizeHandle.css("top", top);
 	updateResizeHandle();

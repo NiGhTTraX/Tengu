@@ -1,5 +1,9 @@
-{% include "market_tree.html" %}
+<div id="left-sidebar-top">
+  {% include "market_tree.html" %}
+</div>
 
 <div id="resize-handle" class="draggable ui-widget-content" {% if resizeHandlerTop != None %}style="top: {{ resizeHandlerTop }}px"{% endif %}>&nbsp;</div>
 
-<div id="items">&nbsp;</div>
+<div id="left-sidebar-bottom">
+  <div id="items">&nbsp;</div>
+</div>

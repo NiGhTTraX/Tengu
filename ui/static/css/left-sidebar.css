@@ -1,10 +1,10 @@
 /* Left sidebar */
-#market-tree {
+#left-sidebar-top {
 	height: 50%;
 	overflow: auto;
 }
 
-#items {
+#left-sidebar-bottom {
 	margin-top: 5px;
 	height: 50%;
 	overflow: auto;
@@ -15,3 +15,4 @@
 	height: 5px;
 	width: 100%;
 }
+
