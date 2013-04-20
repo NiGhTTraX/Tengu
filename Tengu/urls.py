@@ -19,4 +19,5 @@ urlpatterns = patterns('',
     url(r'^updateLeftSidebarResizeHandler/$',
         'ui.views.updateLeftSidebarResizeHandler'),
     url(r'^updateMarketTree/$', 'ui.views.updateMarketTree'),
+    url(r'^getItems/(\d+)/$', 'ui.views.getItems'),
 )

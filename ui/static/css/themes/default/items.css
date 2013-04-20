@@ -1,0 +1,43 @@
+#items-list {
+	min-width: 100%;
+}
+
+#items-list th {
+	text-align: left;
+}
+
+.item {
+	white-space: nowrap;
+	border-top: 1px solid #2e2f32;
+	border-bottom: 1px solid #4f5050;
+	color: #c4c4c4;
+	background: #212121;
+}
+
+.item td {
+	padding: 3px 0;
+	vertical-align: middle;
+}
+
+.item td.icon {
+	width: 16px;
+	height: 16px;
+	padding: 3px 5px;
+}
+
+.item td.icon img {
+	vertical-align: middle;
+}
+
+.item td.name {
+	padding-right: 5px;
+}
+
+.item td.cpu {
+	padding-right: 3px;
+}
+
+.item td.pg {
+	padding-right: 3px;
+}
+

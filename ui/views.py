@@ -1,8 +1,19 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from ui.utils import buildMarketTree
-from inv.models import MarketGroup
+from dogma.models import TypeAttributes
+from inv.models import MarketGroup, Item
 import json
+
+
+marketGroupsToGet = [
+    11,     # Ammunition and Charges
+    157,    # Drones
+    24,     # Implants and Boosters
+    9,      # Ship Equipment
+    955     # Ship Modifications
+]
 
 
 def __getWidgets(request):
@@ -78,13 +89,6 @@ def home(request):
   resizeHandlerTop = __getResizeHandler(request)
 
   # Get the market groups.
-  marketGroupsToGet = [
-      11,     # Ammunition and Charges
-      157,    # Drones
-      24,     # Implants and Boosters
-      9,      # Ship Equipment
-      955     # Ship Modifications
-  ]
   [marketGroups, expandedGroups] = __getMarketTree(request, marketGroupsToGet)
 
   return render(request, 'index.html', locals())
@@ -150,4 +154,40 @@ def updateMarketTree(request):
   response = HttpResponse("updated")
   response.set_cookie("expandedMarketGroups", groups, max_age = 30 * 24 * 3600)
   return response
+
+def __getCPUandPG(itemsIter):
+  """Returns a list of (item, cpu, pg) tuples.
+
+  Args:
+    itemsIter: An iterable over the items.
+  """
+  items = []
+
+  for item in itemsIter:
+    cpu = pg = None
+    try:
+      cpu = TypeAttributes.objects.get(typeID=item, attributeID=50)
+      pg = TypeAttributes.objects.get(typeID=item, attributeID=30)
+    except ObjectDoesNotExist:
+      pass
+
+    items.append((item, cpu, pg))
+
+  return items
+
+def getItems(request, marketGroupID):
+  """Retreives items from a market group."""
+  if not request.is_ajax():
+    raise Http404
+
+  try:
+    marketGroup = MarketGroup.objects.get(pk=marketGroupID)
+  except ObjectDoesNotExist:
+    raise Http404
+
+  itemQuery = Item.objects.filter(marketGroupID = marketGroup,
+                                  published=True).order_by("typeName")
+  items = __getCPUandPG(itemQuery)
+
+  return render_to_response("items.html", locals())
 

@@ -1,3 +1,5 @@
+var marketCache = {};
+
 function updateMarketTree() {
 	var expandedGroups = [];
 	$(".market-group-name.expandable .toggle.collapse").each(function() {
@@ -36,8 +38,24 @@ $(document).ready(function() {
 	});
 
 	$(".market-group-name.empty").click(function() {
+		var id = $(this).attr("id").substr(2);
 		$(".market-group-name.selected").removeClass("selected");
 		$(this).addClass("selected");
+
+		if (marketCache[id]) {
+			// Get the data from cache, saves a request.
+			$("#items").html(marketCache[id]);
+		} else {
+			// Request the data, then cache it.
+			$.ajax({
+					url: "/getItems/" + id + "/",
+					method: "GET",
+					success: function(data) {
+						$("#items").html(data);
+						marketCache[id] = data;
+					}
+			});
+		}
 	});
 });
 
