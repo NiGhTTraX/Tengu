@@ -1,3 +1,8 @@
+#search {
+	margin: 0 5px;
+	position: relative;
+}
+
 #market-tree {
 	display: block;
 	position: absolute;
