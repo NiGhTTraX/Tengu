@@ -1,5 +1,5 @@
 /* Left sidebar CSS */
 #resize-handle {
-	background-color: #999;
+	background: url("images/resize.png") no-repeat 50% 50%;
 	cursor: row-resize;
 }
