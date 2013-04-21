@@ -1,5 +1,14 @@
 #market-tree {
-	background: #212121;
+	display: block;
+	position: absolute;
+	height: auto;
+	bottom: 0;
+	top: 25px;
+	left: 0;
+	right: 0;
+	margin: 5px;
+	overflow: auto;
+	border: 1px solid #2e2f32;
 }
 
 .market-group {

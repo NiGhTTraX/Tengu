@@ -2,12 +2,14 @@
 #left-sidebar-top {
 	height: 50%;
 	overflow: auto;
+	position: relative;
 }
 
 #left-sidebar-bottom {
 	margin-top: 5px;
 	height: 50%;
 	overflow: auto;
+	position: relative;
 }
 
 #resize-handle {
