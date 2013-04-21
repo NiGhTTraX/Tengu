@@ -1,4 +1,6 @@
 var marketCache = {};
+var searchTimer;
+var SEARCH_DELAY = 280; // Average time between keystrokes
 
 function updateMarketTree() {
 	var expandedGroups = [];
@@ -12,6 +14,21 @@ function updateMarketTree() {
 			data: {"expandedGroups": expandedGroups},
 			method: "GET"
 	});
+}
+
+function searchItems() {
+	var keywords = $.trim($("#search-items").val());
+	if (keywords.length > 2) {
+		$("#search div.loading").show();
+		$.ajax({
+				url: "/searchItems/" + keywords + "/",
+				method: "GET",
+				success: function(data) {
+					$("#search div.loading").hide();
+					$("#left-sidebar-bottom").html(data);
+				}
+		});
+	}
 }
 
 $(document).ready(function() {
@@ -44,18 +61,31 @@ $(document).ready(function() {
 
 		if (marketCache[id]) {
 			// Get the data from cache, saves a request.
-			$("#items").html(marketCache[id]);
+			$("#left-sidebar-bottom").html(marketCache[id]);
 		} else {
 			// Request the data, then cache it.
 			$.ajax({
 					url: "/getItems/" + id + "/",
 					method: "GET",
 					success: function(data) {
-						$("#items").html(data);
+						$("#left-sidebar-bottom").html(data);
 						marketCache[id] = data;
 					}
 			});
 		}
+	});
+
+	$("#search-items").focus(function() {
+		if ($(this).val() == "Search term")
+			$(this).val("");
+	}).blur(function() {
+		if ($(this).val() == "")
+			$(this).val("Search term");
+	});
+
+	$("#search-items").bind("input", function() {
+		clearTimeout(searchTimer);
+		searchTimer = setTimeout(searchItems, SEARCH_DELAY);
 	});
 });
 

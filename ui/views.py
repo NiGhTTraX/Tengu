@@ -191,3 +191,21 @@ def getItems(request, marketGroupID):
 
   return render_to_response("items.html", locals())
 
+def searchItems(request, typeName):
+  """Searches for items by name.
+
+  Normally you'd have to check each item if it was part of a 'valid' market
+  group (only the ones being displayed in the market tree). This would take a
+  very long time since you must resolve each item's parent which involves
+  additional database queries.
+
+  But since I pruned the items table of all the 'non valid' items, you can just
+  go ahead and do a simple select query.
+  """
+  if not request.is_ajax():
+    raise Http404
+
+  itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True)
+  items = __getCPUandPG(itemQuery)
+  return render_to_response("items.html", locals())
+
