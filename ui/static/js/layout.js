@@ -14,8 +14,12 @@ function adjustLeftSidebar() {
 	var distance = Math.ceil((oldWindowHeight - windowHeight) / 2);
 	var top = resizeHandle.position().top;
 	var oldTop = top;
+
+	// Don't move the handler below the sidebar.
 	if (top - distance >= 0)
 		top -= distance;
+
+	// Nor above it.
 	if (top > leftSidebar.height())
 		top = leftSidebar.height() - handleHeight;
 
