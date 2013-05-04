@@ -21,4 +21,6 @@ urlpatterns = patterns('',
     url(r'^updateMarketTree/$', 'ui.views.updateMarketTree'),
     url(r'^getItems/(\d+)/$', 'ui.views.getItems'),
     url(r'^searchItems/(.+)/$', 'ui.views.searchItems'),
+    url(r'^searchShipsAndFits/(.+)/$', 'ui.views.searchShipsAndFits'),
+    url(r'^getFits/(\d+)/$', 'ui.views.getFits'),
 )

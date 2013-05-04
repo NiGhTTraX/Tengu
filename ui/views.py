@@ -7,13 +7,29 @@ from inv.models import MarketGroup, Item
 import json
 
 
-marketGroupsToGet = [
+MARKET_GROUPS_ITEMS = [
     11,     # Ammunition and Charges
     157,    # Drones
     24,     # Implants and Boosters
     9,      # Ship Equipment
     955     # Ship Modifications
 ]
+MARKET_GROUP_SHIPS = 4
+MARKET_GROUPS_SHIPS = MarketGroup.objects.filter(
+    parentGroupID = MARKET_GROUP_SHIPS).order_by("marketGroupName").values_list(
+        "marketGroupID", flat=True)
+
+CATEGORIES_ITEMS = [
+    7,      # Modules
+    8,      # Charges
+    18,     # Drones
+    20,     # Implants
+    32      # Subsystems
+]
+CATEGORIES_SHIPS = [6]
+
+ATTRIBUTE_CPU = 50
+ATTRIBUTE_PG = 30
 
 
 def __getWidgets(request):
@@ -56,7 +72,7 @@ def __getResizeHandler(request):
 
   return resizeHandlerTop
 
-def __getMarketTree(request, marketGroupsToGet):
+def __getMarketTree(request, marketGroupsToGet, includeItems = False):
   """Gets the market tree structure and status.
 
   Params:
@@ -69,15 +85,18 @@ def __getMarketTree(request, marketGroupsToGet):
   """
   marketGroups = []
   for group in marketGroupsToGet:
-    marketGroups.extend(buildMarketTree(MarketGroup.objects.get(pk=group)))
+    marketGroups.extend(buildMarketTree(MarketGroup.objects.get(pk=group),
+                                        includeItems))
+  return marketGroups
 
+def __getExpandedGroups(request):
   # Now get which ones should be expanded.
   expandedGroups = []
   if "expandedMarketGroups" in request.COOKIES:
     cookie = json.loads(request.COOKIES["expandedMarketGroups"])
     expandedGroups = [long(x) for x in cookie]
 
-  return [marketGroups, expandedGroups]
+  return expandedGroups
 
 
 def home(request):
@@ -89,7 +108,9 @@ def home(request):
   resizeHandlerTop = __getResizeHandler(request)
 
   # Get the market groups.
-  [marketGroups, expandedGroups] = __getMarketTree(request, marketGroupsToGet)
+  marketGroupsItems = __getMarketTree(request, MARKET_GROUPS_ITEMS)
+  marketGroupsShips = __getMarketTree(request, MARKET_GROUPS_SHIPS, True)
+  expandedGroups = __getExpandedGroups(request)
 
   return render(request, 'index.html', locals())
 
@@ -166,8 +187,8 @@ def __getCPUandPG(itemsIter):
   for item in itemsIter:
     cpu = pg = None
     try:
-      cpu = TypeAttributes.objects.get(typeID=item, attributeID=50)
-      pg = TypeAttributes.objects.get(typeID=item, attributeID=30)
+      cpu = TypeAttributes.objects.get(typeID=item, attributeID=ATTRIBUTE_CPU)
+      pg = TypeAttributes.objects.get(typeID=item, attributeID=ATTRIBUTE_PG)
     except ObjectDoesNotExist:
       pass
 
@@ -194,18 +215,54 @@ def getItems(request, marketGroupID):
 def searchItems(request, typeName):
   """Searches for items by name.
 
-  Normally you'd have to check each item if it was part of a 'valid' market
-  group (only the ones being displayed in the market tree). This would take a
-  very long time since you must resolve each item's parent which involves
-  additional database queries.
-
-  But since I pruned the items table of all the 'non valid' items, you can just
-  go ahead and do a simple select query.
+  You have to check if the items belong to a valid market group i.e. the ones
+  being displayed in the market tree. To do this, you have to resolve the
+  category ID which is linked to by the group ID.
   """
   if not request.is_ajax():
     raise Http404
 
-  itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True)
+  itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True,
+      groupID__categoryID__in=CATEGORIES_ITEMS)
   items = __getCPUandPG(itemQuery)
   return render_to_response("items.html", locals())
+
+def searchShipsAndFits(request, name):
+  """Searches for ships and fits.
+
+  First, get the ships that will include links to create new fittings. Then get
+  all the existing fits that contain the provided keywords.
+  """
+  if not request.is_ajax():
+    raise Http404
+
+  fits = []
+  # First, get the ships.
+  itemQuery = Item.objects.filter(typeName__icontains=name, published=True,
+      groupID__categoryID__in=CATEGORIES_SHIPS)
+  fits = [(0, item) for item in itemQuery]
+
+  # Then, the fits.
+  # TODO
+
+  return render_to_response("ships.html", locals())
+
+def getFits(request, typeID):
+  """Get fits by ship type ID.
+
+  First, get the ship itself that will have a link to create a new fitting for
+  that ship. Then get all the existing fittings that use that ship.
+  """
+  if not request.is_ajax():
+    raise Http404
+
+  fits = []
+  # First, get the ship.
+  item = Item.objects.get(typeID=typeID)
+  fits = [(0, item)]
+
+  # Then, the fits.
+  # TODO
+
+  return render_to_response("ships.html", locals())
 

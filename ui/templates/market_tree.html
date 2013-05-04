@@ -1,20 +1,21 @@
+<div class="tabs">
+  <ul id="market-tabs">
+    <li id="tab-items" data-id="market-items">Items</li>
+    <li id="tab-ships" class="current-tab" data-id="market-ships">Ships</li>
+  </ul>
+</div>
+
 <div id="search">
   <input id="search-items" type="text" value="Search term"/>
   <div class="loading" style="display: none">&nbsp;</div>
 </div>
 
 <div id="market-tree">
-  {% for group in marketGroups %}
-    {% if group.0 == 1 %}
-      <div class="market-group" {% if group.1 > 0 and group.2 not in expandedGroups %}style="display: none"{% endif %}>
-    {% elif group.0 == -1 %}
-      </div>
-    {% else %}
-      <div id="mg{{ group.2.marketGroupID }}" class="market-group-name {% if group.3 == False %}empty{% else %}expandable{% endif %}" style="padding-left: {% widthratio group.1 1 15 %}px">
-        <div class="toggle {% if group.2.marketGroupID in expandedGroups %}collapse{% else %}expand{% endif %}">&nbsp;</div>
-        <h1>{{ group.2.marketGroupName }}</h1>
-      </div>
-    {% endif %}
-  {% endfor %}
+  <div id="market-items" class="tab-content" style="display:none">
+    {% include "market_items.html" with marketGroups=marketGroupsItems %}
+  </div>
+  <div id="market-ships" class="tab-content">
+    {% include "market_items.html" with marketGroups=marketGroupsShips %}
+  </div>
 </div>
 
