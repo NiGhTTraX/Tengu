@@ -1,11 +1,12 @@
 from django.test import TestCase
-from inv.models import MarketGroup
+from inv.models import MarketGroup, Item
 from ui.utils import buildMarketTree
 
 
 class MarketTreeBuilderTest(TestCase):
   def setUp(self):
     self.dummyGroup = MarketGroup(pk=None)
+    self.dummyItem = Item(pk=None, typeName="dummy", published=True)
 
   def test_simple_group(self):
     """One parent group with 2 subgroups."""
@@ -85,5 +86,49 @@ class MarketTreeBuilderTest(TestCase):
     expected.append((-1, 0, 0))
 
     actual = buildMarketTree(parentGroup)
+    self.assertEqual(expected, actual)
+
+  def test_include_items_simple(self):
+    """One parent group with 1 item."""
+    parentGroup = self.dummyGroup
+    parentGroup.save()
+
+    item = self.dummyItem
+    item.marketGroupID = parentGroup
+    item.save()
+
+    expected = []
+    expected.append((0, 0, parentGroup, True))
+    expected.append((1, 1, parentGroup.pk))
+    expected.append((2, 1, item))
+    expected.append((-1, 0, 0))
+
+    actual = buildMarketTree(parentGroup, True)
+    self.assertEqual(expected, actual)
+
+  def test_include_items_complex(self):
+    """One parent group with no items and one subgroup with 1 item."""
+    parentGroup = self.dummyGroup
+    parentGroup.save()
+
+    childGroup = MarketGroup.objects.all()[0]
+    childGroup.pk = None
+    childGroup.parentGroupID = parentGroup
+    childGroup.save()
+
+    item = self.dummyItem
+    item.marketGroupID = childGroup
+    item.save()
+
+    expected = []
+    expected.append((0, 0, parentGroup, True))
+    expected.append((1, 1, parentGroup.pk))
+    expected.append((0, 1, childGroup, True))
+    expected.append((1, 2, childGroup.pk))
+    expected.append((2, 2, item))
+    expected.append((-1, 0, 0))
+    expected.append((-1, 0, 0))
+
+    actual = buildMarketTree(parentGroup, True)
     self.assertEqual(expected, actual)
 
