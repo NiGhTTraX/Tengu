@@ -42,8 +42,8 @@ function updateResizeHandle() {
 }
 
 function adjustColumns() {
-	var leftSidebarWidth = leftSidebar.outerWidth();
-	var rightSidebarWidth = rightSidebar.outerWidth();
+	var leftSidebarWidth = leftSidebar.outerWidth(true);
+	var rightSidebarWidth = rightSidebar.outerWidth(true);
 
 	leftSidebar.height(windowHeight - headerHeight - footerHeight -
 			leftSidebarPaddingY);
@@ -73,16 +73,16 @@ $(document).ready(function() {
 	rightSidebar = $("#right-sidebar");
 	resizeHandle = $("#resize-handle");
 
-	headerHeight = $("#header").outerHeight();
-	footerHeight = $("#footer").outerHeight();
+	headerHeight = $("#header").outerHeight(true);
+	footerHeight = $("#footer").outerHeight(true);
 
-	contentPaddingX = content.outerWidth() - content.width();
-	contentPaddingY = content.outerHeight() - content.height();
+	contentPaddingX = content.outerWidth(true) - content.width();
+	contentPaddingY = content.outerHeight(true) - content.height();
 
-	leftSidebarPaddingX = leftSidebar.outerWidth() - leftSidebar.width();
-	leftSidebarPaddingY = leftSidebar.outerHeight() - leftSidebar.height();
-	rightSidebarPaddingX = rightSidebar.outerWidth() - rightSidebar.width();
-	rightSidebarPaddingY = rightSidebar.outerHeight() - rightSidebar.height();
+	leftSidebarPaddingX = leftSidebar.outerWidth(true) - leftSidebar.width();
+	leftSidebarPaddingY = leftSidebar.outerHeight(true) - leftSidebar.height();
+	rightSidebarPaddingX = rightSidebar.outerWidth(true) - rightSidebar.width();
+	rightSidebarPaddingY = rightSidebar.outerHeight(true) - rightSidebar.height();
 
 	oldWindowHeight = $(window).height();
 	oldWindowWidth = $(window).width();
