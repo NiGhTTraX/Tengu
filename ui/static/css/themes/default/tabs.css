@@ -1,5 +1,6 @@
 /* Tabs CSS */
 .tabs {
+	margin-top: 5px;
 	border-bottom: 1px solid #2e2f32;
 	height: 19px;
 	padding: 0 5px;
