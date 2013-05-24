@@ -1,13 +1,22 @@
 $(document).ready(function() {
 	$(".tabs li").click(function() {
+		var parent = $(this).parent();
+
 		// Focus the tab.
-		$(".current-tab").removeClass("current-tab");
+		$(".current-tab", parent).removeClass("current-tab");
 		$(this).addClass("current-tab");
 
-		// Display the proper content by getting the id of the element to be shown
-		// from the data-id attribute.
-		$(".tab-content").hide();
-		$("#" + $(this).data("id")).show();
+		/**
+		 * If the ul element has a data-id attribute, then whenever a tab is
+		 * selected, all the divs that have the class tab-content in the element
+		 * whose id is set through data-id will be hidden. Then, the element whose
+		 * id is set through the data-id attribute belonging to the selected tab
+		 * will be shown.
+		 */
+		if (parent.data("id")) {
+			$(".tab-content", $("#" + parent.data("id"))).hide();
+			$("#" + $(this).data("id")).show();
+		}
 	});
 
 	// Make the tabs sortable.
