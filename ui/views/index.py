@@ -4,6 +4,7 @@ from django.shortcuts import render, render_to_response
 from ui.utils import buildMarketTree
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
+from django.conf import settings
 import json
 
 
@@ -89,6 +90,8 @@ def __getExpandedGroups(request):
 
 def home(request):
   """Home page view."""
+  siteName = settings.SITE_NAME
+
   # Get the stats widgets.
   widgets = __getWidgets(request)
 
