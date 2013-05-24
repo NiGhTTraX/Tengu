@@ -42,3 +42,12 @@
 	padding-right: 3px;
 }
 
+#items-box {
+	position: absolute;
+	height: auto;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
