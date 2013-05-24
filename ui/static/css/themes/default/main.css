@@ -9,23 +9,6 @@ html, body {
 	background-color: #010101;
 }
 
-#header {
-	border-bottom: 6px double gray;
-}
-
-#footer {
-	background: #ddd;
-	border-top: 6px double gray;
-}
-
-#content{
-	border: 2px double #999;
-}
-
-#right-sidebar {
-	border: 1px solid #fff;
-}
-
 .eve-box {
 	display: block;
 	margin: 5px;

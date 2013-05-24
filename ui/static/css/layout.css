@@ -25,9 +25,8 @@ html, body {
 
 #content{
 	position: absolute;
-	left: 300px;
-	top: 36px;
-	padding: 10px 20px;
+	left: 312px;
+	top: 30px;
 }
 
 #left-sidebar {
@@ -39,7 +38,5 @@ html, body {
 #right-sidebar {
 	width: 280px;
 	float: right;
-	padding: 10px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	padding: 5px;
 }
