@@ -1,22 +1,9 @@
-#items {
-	display: block;
-	position: absolute;
-	height: auto;
-	bottom: 0;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin: 5px;
-	overflow: auto;
-	border: 1px solid #2e2f32;
-}
-
-#items-list {
+.items-list {
 	min-width: 100%;
 	text-align: left;
 }
 
-#items-list th {
+.items-list th {
 	text-align: left;
 }
 

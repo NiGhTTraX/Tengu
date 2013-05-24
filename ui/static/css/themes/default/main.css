@@ -26,6 +26,19 @@ html, body {
 	border: 1px solid #fff;
 }
 
+.eve-box {
+	display: block;
+	position: absolute;
+	height: auto;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 5px;
+	overflow: auto;
+	border: 1px solid #2e2f32;
+}
+
 /* Input */
 input[type=text] {
 	box-sizing: border-box;

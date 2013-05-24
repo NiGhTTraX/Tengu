@@ -36,7 +36,7 @@ function searchItems() {
 				method: "GET",
 				success: function(data) {
 					$("#search div.loading").hide();
-					$("#left-sidebar-bottom").html(data);
+					$("#items-box").html(data);
 
 					// Remove selection.
 					$(".market-group-name.selected", tabContents).removeClass("selected");
@@ -78,14 +78,14 @@ $(document).ready(function() {
 		if (selectedTab == "tab-items") {
 			if (marketCache[id]) {
 				// Get the data from cache, saves a request.
-				$("#left-sidebar-bottom").html(marketCache[id]);
+				$("#items-box").html(marketCache[id]);
 			} else {
 				// Request the data, then cache it.
 				$.ajax({
 						url: "/getItems/" + id + "/",
 						method: "GET",
 						success: function(data) {
-							$("#left-sidebar-bottom").html(data);
+							$("#items-box").html(data);
 							marketCache[id] = data;
 						}
 				});
@@ -94,7 +94,7 @@ $(document).ready(function() {
 		else if (selectedTab == "tab-ships") {
 			if (marketCache[id]) {
 				// Get the data from cache, saves a request.
-				$("#left-sidebar-bottom").html(marketCache[id]);
+				$("#items-box").html(marketCache[id]);
 			} else {
 				// Request the data, then cache it. When creating a new fit, this cache
 				// must be invalidated.
@@ -102,7 +102,7 @@ $(document).ready(function() {
 						url: "/getFits/" + id + "/",
 						method: "GET",
 						success: function(data) {
-							$("#left-sidebar-bottom").html(data);
+							$("#items-box").html(data);
 						}
 				});
 			}
@@ -112,8 +112,8 @@ $(document).ready(function() {
 
 	// When switching tabs, clear the items list.
 	$("#market-tabs li").click(function() {
-		var old = $("#left-sidebar-bottom").html();
-		$("#left-sidebar-bottom").html(oldItems);
+		var old = $("#items-box").html();
+		$("#items-box").html(oldItems);
 		oldItems = old;
 	});
 
