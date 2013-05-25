@@ -33,6 +33,7 @@ html, body {
 	width: 300px;
 	position: relative;
 	float: left;
+	overflow: hidden;
 }
 
 #right-sidebar {

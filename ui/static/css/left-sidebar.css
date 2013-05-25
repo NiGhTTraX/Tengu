@@ -1,13 +1,13 @@
 /* Left sidebar */
 #left-sidebar-top {
 	height: 50%;
-	overflow: auto;
+	overflow: hidden;
 	position: relative;
 }
 
 #left-sidebar-bottom {
 	height: 50%;
-	overflow: auto;
+	overflow: hidden ;
 	position: relative;
 	text-align: center;
 }
