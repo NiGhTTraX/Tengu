@@ -48,14 +48,14 @@ def updateWidgets(request):
   if not request.is_ajax():
     raise Http404
 
-  if request.method != "GET":
+  if request.method != "POST":
     raise Http404
 
-  if "widgets[]" not in request.GET or "widgetStatuses[]" not in request.GET:
+  if "widgets[]" not in request.POST or "widgetStatuses[]" not in request.POST:
     raise Http404
 
-  widgets = json.dumps(request.GET.getlist("widgets[]"))
-  widgetStatuses = json.dumps(request.GET.getlist("widgetStatuses[]"))
+  widgets = json.dumps(request.POST.getlist("widgets[]"))
+  widgetStatuses = json.dumps(request.POST.getlist("widgetStatuses[]"))
   if not widgets or not widgetStatuses:
     raise Http404
 
@@ -71,10 +71,10 @@ def updateMarketTree(request):
   if not request.is_ajax():
     raise Http404
 
-  if request.method != "GET":
+  if request.method != "POST":
     raise Http404
 
-  groups = json.dumps(request.GET.getlist("expandedGroups[]"))
+  groups = json.dumps(request.POST.getlist("expandedGroups[]"))
   response = HttpResponse("updated")
   response.set_cookie("expandedMarketGroups", groups, max_age = 30 * 24 * 3600)
   return response

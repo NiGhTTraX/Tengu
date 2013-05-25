@@ -13,8 +13,8 @@ function updateMarketTree() {
 
 	$.ajax({
 			url: "/updateMarketTree/",
+			method: "POST"
 			data: {"expandedGroups": expandedGroups},
-			method: "GET"
 	});
 }
 
