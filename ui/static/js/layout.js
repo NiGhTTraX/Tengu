@@ -6,6 +6,9 @@ var headerHeight, footerHeight;
 var oldWindowHeight, oldWindowWidth;
 var windowHeight, windowWidth;
 
+var COOKIE_EXPIRE = 3600 * 24 * 30;
+
+
 function adjustLeftSidebar() {
 	var handlePosition = resizeHandle.position().top;
 	var handleHeight = resizeHandle.height();
@@ -34,11 +37,7 @@ function adjustLeftSidebar() {
 function updateResizeHandle() {
 	var top = resizeHandle.position().top;
 
-	$.ajax({
-			url: "/updateLeftSidebarResizeHandler/",
-			method: "GET",
-			data: {"top": top}
-	});
+	$.cookie("leftSidebarResizeHandler", top, COOKIE_EXPIRE);
 }
 
 function adjustColumns() {
@@ -86,6 +85,11 @@ $(document).ready(function() {
 
 	oldWindowHeight = $(window).height();
 	oldWindowWidth = $(window).width();
+
+	// Restore resize handler's position.
+	var top = $.cookie("leftSidebarResizeHandler");
+	if (top)
+		resizeHandle.css("top", parseInt(top));
 
 	adjustLayout();
 

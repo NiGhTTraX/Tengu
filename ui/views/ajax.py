@@ -66,28 +66,6 @@ def updateWidgets(request):
 
   return response
 
-def updateLeftSidebarResizeHandler(request):
-  """Updates the left sidebar resize handler."""
-  if not request.is_ajax():
-    raise Http404
-
-  if request.method != "GET":
-    raise Http404
-
-  if "top" not in request.GET:
-    raise Http404
-
-  top = 0
-  try:
-    top = int(request.GET["top"])
-  except ValueError:
-    raise Http404
-
-  response = HttpResponse("updated")
-  response.set_cookie("leftSidebarResizeHandle", top, max_age = 30 * 24 * 3600)
-
-  return response
-
 def updateMarketTree(request):
   """Updates the market tree expanded groups."""
   if not request.is_ajax():
