@@ -2,4 +2,9 @@
 #resize-handle {
 	background: url("images/resize.png") no-repeat 50% 50%;
 	cursor: row-resize;
+	height: 8px !important;
+}
+
+#left-sidebar-bottom {
+	margin-top: 8px;
 }
