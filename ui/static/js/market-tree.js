@@ -1,4 +1,5 @@
-var marketCache = {};
+var itemsCache = {};
+var shipsCache = {};
 var searchTimer;
 var SEARCH_DELAY = 280; // Average time between keystrokes
 var oldItems = "";
@@ -70,15 +71,16 @@ $(document).ready(function() {
 
 	$(".market-group-name.empty").click(function() {
 		var id = $(this).attr("id").substr(2);
+		var selectedTab = $("#market-tabs .current-tab").attr("id");
+
 		$(".market-group-name.selected:visible").removeClass("selected");
 		$(this).addClass("selected");
 
 		// Is this an item group, or a ship?
-		var selectedTab = $("#market-tabs .current-tab").attr("id");
 		if (selectedTab == "tab-items") {
-			if (marketCache[id]) {
+			if (itemsCache[id]) {
 				// Get the data from cache, saves a request.
-				$("#items-box").html(marketCache[id]);
+				$("#items-box").html(itemsCache[id]);
 			} else {
 				// Request the data, then cache it.
 				$.ajax({
@@ -86,15 +88,15 @@ $(document).ready(function() {
 						method: "GET",
 						success: function(data) {
 							$("#items-box").html(data);
-							marketCache[id] = data;
+							itemsCache[id] = data;
 						}
 				});
 			}
 		}
 		else if (selectedTab == "tab-ships") {
-			if (marketCache[id]) {
+			if (shipsCache[id]) {
 				// Get the data from cache, saves a request.
-				$("#items-box").html(marketCache[id]);
+				$("#items-box").html(shipsCache[id]);
 			} else {
 				// Request the data, then cache it. When creating a new fit, this cache
 				// must be invalidated.
@@ -103,6 +105,7 @@ $(document).ready(function() {
 						method: "GET",
 						success: function(data) {
 							$("#items-box").html(data);
+							shipsCache[id] = data;
 						}
 				});
 			}
