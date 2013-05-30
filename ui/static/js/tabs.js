@@ -20,7 +20,7 @@ $(document).ready(function() {
 	});
 
 	// Make the tabs sortable.
-	$(".tabs ul").sortable({
+	$(".tabs.sortable ul").sortable({
 			axis: "x",
 			containment: "parent",
 			delay: 150, // to prevent unwanted drags when clicking
