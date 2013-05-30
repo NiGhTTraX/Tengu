@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(".tabs li").click(function() {
+	$(document).on("click", ".tabs li", function() {
 		var parent = $(this).parent();
 
 		// Focus the tab.
@@ -22,7 +22,7 @@ $(document).ready(function() {
 	// Make the tabs sortable.
 	$(".tabs ul").sortable({
 			axis: "x",
-			containment: $(".tabs ul"),
+			containment: "parent",
 			delay: 150, // to prevent unwanted drags when clicking
 			cursorAt: {left: 5}
 	});
