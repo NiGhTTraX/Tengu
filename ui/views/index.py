@@ -5,6 +5,7 @@ from ui.utils import buildMarketTree
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
 
@@ -87,7 +88,7 @@ def __getExpandedGroups(request):
 
   return expandedGroups
 
-
+@ensure_csrf_cookie
 def home(request):
   """Home page view."""
   siteName = settings.SITE_NAME
