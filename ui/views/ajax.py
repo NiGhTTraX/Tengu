@@ -141,8 +141,12 @@ def getFits(request, typeID):
 
   fits = []
   # First, get the ship.
-  item = Item.objects.get(typeID=typeID)
-  fits = [(0, item)]
+  try:
+    item = Item.objects.get(typeID=typeID)
+    fits = [(0, item)]
+  except Item.ObjectDoesNotExist:
+    raise Http404
+
 
   # Then, the fits.
   # TODO
