@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(document).on("click", ".tabs li", function() {
+	$(document).on("click", ".tabs li:not(.current-tab)", function() {
 		var parent = $(this).parent();
 
 		// Focus the tab.

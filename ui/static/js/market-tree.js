@@ -115,6 +115,9 @@ $(document).ready(function() {
 
 	// When switching tabs, clear the items list.
 	$("#market-tabs li").click(function() {
+		if ($(this).hasClass("current-tab"))
+			return;
+
 		var old = $("#items-box").html();
 		$("#items-box").html(oldItems);
 		oldItems = old;
