@@ -5,6 +5,9 @@
 	height: 19px;
 	padding: 0 5px;
 	position: relative;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .tabs li {
