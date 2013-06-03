@@ -19,6 +19,26 @@ $(document).ready(function() {
 		}
 	});
 
+	// Handle the close tab button.
+	$(document).on("click", ".tabs li .close", function() {
+		var parent = $(this).parent();
+		var list = parent.parent();
+
+		// Remove the tab and the tab content.
+		$("#" + parent.data("id")).remove();
+		parent.remove();
+
+		// Refresh the list.
+		list.sortable("refresh");
+
+		// Focus on right most tab.
+		var last = $("li:not(.static):last", list);
+		if (last.size()) {
+			last.addClass("current-tab");
+			$("#" + last.data("id")).show();
+		}
+	});
+
 	// Make the tabs sortable.
 	$(".tabs.sortable ul").sortable({
 			items: "> li:not(.static)",

@@ -14,9 +14,21 @@
 	min-width: 50px;
 	border: 1px solid #2e2f32;
 	border-bottom: none;
-	padding: 2px;
+	padding: 2px 5px;
 	text-align: center;
 	z-index: 99;
+}
+
+.tabs .title {
+	float: left;
+}
+
+.tabs .close {
+	float: right;
+	background: url("images/73_16_49.png");
+	width: 16px;
+	height: 16px;
+	margin-left: 5px;
 }
 
 .current-tab {
