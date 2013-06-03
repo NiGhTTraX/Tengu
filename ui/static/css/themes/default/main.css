@@ -44,6 +44,27 @@ input[type=text] {
 	background: url("images/loader.gif");
 }
 
+/* Links */
+a:link {
+	color: #c4c4c4;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #c4c4c4;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #c4c4c4;
+	text-decoration: underline;
+}
+
+a:active {
+	color: #c4c4c4;
+	text-decoration: none;
+}
+
 /* Scrollbars */
 ::-webkit-scrollbar {
 	width: 11px;
