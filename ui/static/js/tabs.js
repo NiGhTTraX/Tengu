@@ -21,6 +21,7 @@ $(document).ready(function() {
 
 	// Make the tabs sortable.
 	$(".tabs.sortable ul").sortable({
+			items: "> li:not(.static)",
 			axis: "x",
 			containment: "parent",
 			delay: 150, // to prevent unwanted drags when clicking
