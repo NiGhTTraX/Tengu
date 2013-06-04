@@ -1,3 +1,36 @@
+/**
+ * Closes a tab.
+ *
+ * This removes the tab element from the DOM of the containing list and
+ * refreshes the sortable plugin. The current focus is moved to the right most
+ * tab, if one exists.
+ *
+ * At the end, it triggers a 'tabs.close' event that can be picked up by the
+ * apropriate handlers.
+ *
+ * Args:
+ *	that: jQuery object representing the tab to be closed.
+ */
+function closeTab(that) {
+	var list = that.parent();
+
+	// Remove the tab and the tab content.
+	$("#" + that.data("id")).remove();
+	that.remove();
+
+	// Refresh the list.
+	list.sortable("refresh");
+
+	// Focus on right most tab.
+	var last = $("li:not(.static):last", list);
+	if (last.size()) {
+		last.addClass("current-tab");
+		$("#" + last.data("id")).show();
+	}
+
+	list.trigger("tabs.close");
+}
+
 $(document).ready(function() {
 	$(document).on("click", ".tabs li:not(.current-tab)", function() {
 		var parent = $(this).parent();
@@ -21,23 +54,18 @@ $(document).ready(function() {
 
 	// Handle the close tab button.
 	$(document).on("click", ".tabs li .close", function() {
-		var parent = $(this).parent();
-		var list = parent.parent();
+		closeTab($(this).parent());
+	});
 
-		// Remove the tab and the tab content.
-		$("#" + parent.data("id")).remove();
-		parent.remove();
-
-		// Refresh the list.
-		list.sortable("refresh");
-
-		// Focus on right most tab.
-		var last = $("li:not(.static):last", list);
-		if (last.size()) {
-			last.addClass("current-tab");
-			$("#" + last.data("id")).show();
+	// Close tabs on middle button.
+	$(document).on("mousedown", ".tabs li:not(.static)", function(e) {
+		if (e.which == 2) {
+			// Only sortable tabs may be closed.
+			if ($(this).parent().parent().hasClass("sortable"))
+				closeTab($(this));
 		}
 	});
+
 
 	// Make the tabs sortable.
 	$(".tabs.sortable ul").sortable({
