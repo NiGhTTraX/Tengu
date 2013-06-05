@@ -45,6 +45,10 @@ input[type=text] {
 }
 
 /* Links */
+a {
+	cursor: pointer;
+}
+
 a:link {
 	color: #c4c4c4;
 	text-decoration: none;
