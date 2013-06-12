@@ -1,3 +1,31 @@
+function focusTab(tab) {
+	/**
+	 * Switches to a tab.
+	 *
+	 * Args:
+	 *	tab: Can either be an id (including the leading '#') or a jQuery element.
+	 *
+	 * Returns:
+	 *	True: If the tab exists.
+	 *	False: If there is no such tab.
+	 */
+	var o = $(tab);
+
+	if (o.size()) {
+		var list = o.parent();
+		var pane = $(list.data("id"));
+
+		$(".current-tab", list).removeClass("current-tab");
+		$(".tab-content", pane).hide();
+		o.addClass("current-tab");
+		$(o.data("id")).show();
+
+		return true;
+	}
+
+	return false;
+}
+
 /**
  * Closes a tab.
  *
