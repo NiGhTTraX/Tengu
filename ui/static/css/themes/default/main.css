@@ -44,6 +44,38 @@ input[type=text] {
 	background: url("images/loader.gif");
 }
 
+/* Loader sprite */
+@-webkit-keyframes loaderSprite {
+	from { background-position: 0px; }
+	to { background-position: -4000px; }
+}
+
+@-moz-keyframes loaderSprite {
+	from { background-position: 0px; }
+	to { background-position: -4000px; }
+}
+
+@keyframes loaderSprite {
+	from { background-position: 0px; }
+	to { background-position: -4000px; }
+}
+
+.loader {
+	width: 100px;
+	height: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	background-image: url("images/loaderSprite.png");
+	-webkit-animation: loaderSprite 1.3333333333333333s steps(40, end) infinite;
+	-moz-animation: loaderSprite 1.3333333333333333s steps(40, end) infinite;
+	animation: loaderSprite 1.3333333333333333s steps(40, end) infinite;
+}
+
+body:after { /* Preload the sprite */
+	content: url("images/loaderSprite.png");
+	display: none;
+}
+
 /* Links */
 a {
 	cursor: pointer;
