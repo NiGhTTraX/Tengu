@@ -48,7 +48,7 @@ function closeTab(that) {
 	if (obj)
 		obj.remove();
 	else
-		$("#" + that.data("id")).remove();
+		$(that.data("id")).remove();
 	that.remove();
 
 	// Refresh the list.
@@ -58,7 +58,7 @@ function closeTab(that) {
 	var last = $("li:not(.static):last", list);
 	if (last.size()) {
 		last.addClass("current-tab");
-		$("#" + last.data("id")).show();
+		$(last.data("id")).show();
 	}
 
 	list.trigger("tabs.close");
@@ -81,13 +81,13 @@ $(document).ready(function() {
 		 */
 		var pid = parent.data("id");
 		if (pid) {
-			$(".tab-content", $("#" + pid)).hide();
+			$(".tab-content", $(pid)).hide();
 
 			var obj = $(this).data("obj");
 			if (obj)
 				obj.show();
 			else
-				$("#" + $(this).data("id")).show();
+				$($(this).data("id")).show();
 		}
 	});
 
