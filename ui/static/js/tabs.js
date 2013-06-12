@@ -14,8 +14,13 @@
 function closeTab(that) {
 	var list = that.parent();
 
-	// Remove the tab and the tab content.
-	$("#" + that.data("id")).remove();
+	// Remove the tab and the tab content. See below for more details on data
+	// attributes.
+	var obj = that.data("obj");
+	if (obj)
+		obj.remove();
+	else
+		$("#" + that.data("id")).remove();
 	that.remove();
 
 	// Refresh the list.
@@ -42,13 +47,19 @@ $(document).ready(function() {
 		/**
 		 * If the ul element has a data-id attribute, then whenever a tab is
 		 * selected, all the divs that have the class tab-content in the element
-		 * whose id is set through data-id will be hidden. Then, the element whose
-		 * id is set through the data-id attribute belonging to the selected tab
-		 * will be shown.
+		 * whose id is set through data-id will be hidden. Then, if an element is set
+		 * through data-obj or an id of an element is set through data-id, that
+		 * element is shown. data-obj takes priority over data-id.
 		 */
-		if (parent.data("id")) {
-			$(".tab-content", $("#" + parent.data("id"))).hide();
-			$("#" + $(this).data("id")).show();
+		var pid = parent.data("id");
+		if (pid) {
+			$(".tab-content", $("#" + pid)).hide();
+
+			var obj = $(this).data("obj");
+			if (obj)
+				obj.show();
+			else
+				$("#" + $(this).data("id")).show();
 		}
 	});
 
