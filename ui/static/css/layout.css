@@ -41,3 +41,20 @@ html, body {
 	float: right;
 	padding: 5px;
 }
+
+/* Vertically aligned divs */
+.vcw { /* Wrapper */
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+.vcc { /* Content */
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.vct { /* Text */
+	text-align: center;
+}
+
