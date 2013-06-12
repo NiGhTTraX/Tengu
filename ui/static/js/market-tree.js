@@ -1,5 +1,4 @@
 var itemsCache = {};
-var shipsCache = {};
 var searchTimer;
 var SEARCH_DELAY = 280; // Average time between keystrokes
 var oldItems = "";
@@ -94,22 +93,14 @@ $(document).ready(function() {
 			}
 		}
 		else if (selectedTab == "tab-ships") {
-			if (shipsCache[id]) {
-				// Get the data from cache, saves a request.
-				$("#items-box").html(shipsCache[id]);
-			} else {
-				// Request the data, then cache it. When creating a new fit, this cache
-				// must be invalidated.
-				$.ajax({
-						url: "/getFits/" + id + "/",
-						method: "GET",
-						success: function(data) {
-							$("#items-box").html(data);
-							shipsCache[id] = data;
-						}
-				});
-			}
-
+			// Responses can not be cached since they're always changing.
+			$.ajax({
+					url: "/getFits/" + id + "/",
+					method: "GET",
+					success: function(data) {
+						$("#items-box").html(data);
+					}
+			});
 		}
 	});
 
