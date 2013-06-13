@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<div class="fit">
+  <div class="bg">
+    <img src="http://image.eveonline.com/Render/{{ fit.shipID.pk }}_512.png" alt="{{ fit.shipID.typeName }}">
+  </div>
+
+  <div class="wheel">&nbsp;</div>
+  <div class="slots highs{{ slots.highSlots }}"></div>
+  <div class="slots meds{{ slots.medSlots }}"></div>
+  <div class="slots lows{{ slots.lowSlots }}"></div>
+  <div class="slots rigs{{ slots.rigSlots }}"></div>
+  <div class="slots subs{{ slots.subSlots }}"></div>
+  <div class="slots missiles{{ slots.missileSlots}}"></div>
+  <div class="slots turrets{{ slots.turretSlots}}"></div>
+</div>
+

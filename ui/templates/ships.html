@@ -15,7 +15,9 @@
     <td class="name">{{ item.1.typeName }}</td>
     <td>
       {% if item.0 == 0 %}
-        Create new fit
+        <a class="fit-new" data-id="{{ item.1.typeID }}">Create new fit</a>
+      {% else %}
+        <a class="fit-link" data-id="{{ item.2.pk }}">{{ item.2.fitName }}</a>
       {% endif %}
     </td>
   </tr>

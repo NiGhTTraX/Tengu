@@ -1,11 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
-from ui.utils import buildMarketTree
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.conf import settings
+
+from ui.utils import buildMarketTree, getSlots
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
-from django.conf import settings
-from django.views.decorators.csrf import ensure_csrf_cookie
+from service.models import Fit
+from service.utils import base_decode
+
 import json
 
 
@@ -89,7 +93,7 @@ def __getExpandedGroups(request):
   return expandedGroups
 
 @ensure_csrf_cookie
-def home(request):
+def home(request, fitURL = None):
   """Home page view."""
   siteName = settings.SITE_NAME
 
@@ -103,6 +107,17 @@ def home(request):
   marketGroupsItems = __getMarketTree(request, MARKET_GROUPS_ITEMS)
   marketGroupsShips = __getMarketTree(request, MARKET_GROUPS_SHIPS, True)
   expandedGroups = __getExpandedGroups(request)
+
+  # Are we viewing a fit?
+  if fitURL:
+    fitID = base_decode(fitURL)
+    try:
+      fit = Fit.objects.get(pk = fitID)
+
+      # Get slots.
+      slots = getSlots(fit.shipID)
+    except Fit.DoesNotExist:
+      fit = None
 
   return render(request, 'index.html', locals())
 

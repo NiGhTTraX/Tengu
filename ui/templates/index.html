@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/themes/default/stats-widget.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/themes/default/market.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/themes/default/items.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/themes/default/fit.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/themes/default/content.css" %}">
     {% endcompress %}
     {% compress js %}
     <script type="text/javascript" src="{% static "js/jquery/jquery-1.9.1.min.js" %}"></script>
@@ -24,6 +26,7 @@
     <script type="text/javascript" src="{% static "js/market-tree.js" %}"></script>
     <script type="text/javascript" src="{% static "js/tabs.js" %}"></script>
     <script type="text/javascript" src="{% static "js/stats-widget.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/fits.js" %}"></script>
     {% endcompress %}
   </head>
   <body>
@@ -33,7 +36,7 @@
       </div>
 
       <div id="content" class="eve-box">
-        Center
+        {% include "content.html" %}
       </div>
 
       <div id="left-sidebar" class="eve-box">

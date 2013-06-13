@@ -1,5 +1,19 @@
 # Utility functions
 from inv.models import MarketGroup, Item
+from dogma.models import TypeAttributes
+
+
+ATTRIBUTE_CPU = 50
+ATTRIBUTE_PG = 30
+
+ATTRIBUTE_LOWSLOTS = 12
+ATTRIBUTE_MEDSLOTS = 13
+ATTRIBUTE_HIGHSLOTS = 14
+ATTRIBUTE_RIGSLOTS = 1137
+ATTRIBUTE_SUBSYSTEMS = 1367
+
+ATTRIBUTE_MISSILESLOTS = 101
+ATTRIBUTE_TURRETSLOTS = 102
 
 
 def buildMarketTree(marketGroup = None, includeItems = False, level = 0):
@@ -35,4 +49,73 @@ def buildMarketTree(marketGroup = None, includeItems = False, level = 0):
   result.append((-1, 0, 0))
 
   return result
+
+def getCPUandPG(itemsIter):
+  """Returns a list of (item, cpu, pg) tuples.
+
+  Args:
+    itemsIter: An iterable over the items.
+  """
+  items = []
+
+  for item in itemsIter:
+    cpu = pg = None
+    try:
+      cpu = TypeAttributes.objects.get(typeID=item, attributeID=ATTRIBUTE_CPU)
+      pg = TypeAttributes.objects.get(typeID=item, attributeID=ATTRIBUTE_PG)
+    except TypeAttributes.DoesNotExist:
+      pass
+
+    items.append((item, cpu, pg))
+
+  return items
+
+def getSlots(ship):
+  """Get the number of slots for a given ship.
+
+  Returns:
+    A dictionary.
+  """
+  try:
+    highSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_HIGHSLOTS).value)
+    medSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_MEDSLOTS).value)
+    lowSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_LOWSLOTS).value)
+  except TypeAttributes.DoesNotExist:
+    # This is a T3 ship.
+    highSlots = medSlots = lowSlots = 0
+
+  try:
+    rigSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_RIGSLOTS).value)
+  except TypeAttributes.DoesNotExist:
+    rigSlots = 0
+
+  try:
+    subSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_SUBSYSTEMS).value)
+  except TypeAttributes.DoesNotExist:
+    subSlots = 0
+
+  # Get missile and turret slots.
+  try:
+    missileSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_MISSILESLOTS).value)
+    turretSlots = int(TypeAttributes.objects.get(typeID=ship,
+        attributeID=ATTRIBUTE_TURRETSLOTS).value)
+  except TypeAttributes.DoesNotExist:
+    # This is a T3 ship.
+    missileSlots = turretSlots = 0
+
+  return {
+      "highSlots": highSlots,
+      "medSlots": medSlots,
+      "lowSlots": lowSlots,
+      "rigSlots": rigSlots,
+      "subSlots": subSlots,
+      "turretSlots": turretSlots,
+      "missileSlots": missileSlots
+  }
 

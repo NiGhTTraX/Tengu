@@ -1,0 +1,14 @@
+#content {
+	overflow: hidden;
+}
+
+#fitting-window {
+	overflow: auto;
+	position: absolute;
+	top: 25px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: auto;
+}
+

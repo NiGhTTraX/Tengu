@@ -1,0 +1,27 @@
+<div class="tabs sortable">
+  <ul id="tabs-fits" data-id="#fitting-window">
+    <li {% if fit %}style="display: none"{% endif %} class="welcome {% if not fit %}current-tab{% endif %}">New fit</li>
+    {% if fit %}
+    <li id="fit-tab{{ fit.pk }}" class="current-tab" data-id="#fit{{ fit.pk }}" data-url="{{ fit.url }}">
+      <div class="title">{{ fit.fitName }}</div>
+      <div class="close"></div>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+
+<div id="fitting-window">
+  <div class="tab-content vcw tip" {% if fit %}style="display: none"{% endif %}>
+    <div class="vcc">
+      <p class="vct">
+        Use the ship browser to create a new fitting or edit an existing one.
+      </p>
+    </div>
+  </div>
+
+  {% if fit %}
+    <div class="tab-content" id="fit{{ fit.pk }}">
+      {% include "fit.html" %}
+    </div>
+  {% endif %}
+</div>
