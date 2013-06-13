@@ -6,17 +6,11 @@ from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
 from ui.utils import getCPUandPG
 
+from inv.const import CATEGORIES_ITEMS, CATEGORIES_SHIPS
+
 import json
 
 
-CATEGORIES_ITEMS = [
-    7,      # Modules
-    8,      # Charges
-    18,     # Drones
-    20,     # Implants
-    32      # Subsystems
-]
-CATEGORIES_SHIPS = [6]
 
 def updateWidgets(request):
   """Updates the stats widgets in the right sidebar.

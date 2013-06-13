@@ -2,18 +2,7 @@
 from inv.models import MarketGroup, Item
 from dogma.models import TypeAttributes
 
-
-ATTRIBUTE_CPU = 50
-ATTRIBUTE_PG = 30
-
-ATTRIBUTE_LOWSLOTS = 12
-ATTRIBUTE_MEDSLOTS = 13
-ATTRIBUTE_HIGHSLOTS = 14
-ATTRIBUTE_RIGSLOTS = 1137
-ATTRIBUTE_SUBSYSTEMS = 1367
-
-ATTRIBUTE_MISSILESLOTS = 101
-ATTRIBUTE_TURRETSLOTS = 102
+from dogma.const import *
 
 
 def buildMarketTree(marketGroup = None, includeItems = False, level = 0):

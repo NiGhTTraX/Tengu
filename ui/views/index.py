@@ -10,20 +10,9 @@ from inv.models import MarketGroup, Item
 from service.models import Fit
 from service.utils import base_decode
 
+from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
+
 import json
-
-
-MARKET_GROUPS_ITEMS = [
-    11,     # Ammunition and Charges
-    157,    # Drones
-    24,     # Implants and Boosters
-    9,      # Ship Equipment
-    955     # Ship Modifications
-]
-MARKET_GROUP_SHIPS = 4
-MARKET_GROUPS_SHIPS = MarketGroup.objects.filter(
-    parentGroupID = MARKET_GROUP_SHIPS).order_by("marketGroupName").values_list(
-        "marketGroupID", flat=True)
 
 
 def __getWidgets(request):

@@ -7,8 +7,9 @@ from service.models import Fit
 from ui.utils import getSlots
 from inv.models import Item
 
+from inv.const import CATEGORIES_SHIPS
+
 import json
-CATEGORIES_SHIPS = [6]
 
 
 def __getVisibilityQuery(request):
