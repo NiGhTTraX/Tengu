@@ -2,6 +2,7 @@ var itemsCache = {};
 var searchTimer;
 var SEARCH_DELAY = 280; // Average time between keystrokes
 var oldItems = "";
+var searchResults = "";
 
 function updateMarketTree() {
 	var expandedGroups = [];
@@ -37,6 +38,7 @@ function searchItems() {
 				success: function(data) {
 					$("#search div.loading").hide();
 					$("#items-box").html(data);
+					searchResults = data;
 
 					// Remove selection.
 					$(".market-group-name.selected", tabContents).removeClass("selected");
@@ -104,7 +106,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// When switching tabs, clear the items list.
+	// When switching tabs, clear the items list and the search box.
 	$("#market-tabs li").click(function() {
 		if ($(this).hasClass("current-tab"))
 			return;
@@ -112,6 +114,8 @@ $(document).ready(function() {
 		var old = $("#items-box").html();
 		$("#items-box").html(oldItems);
 		oldItems = old;
+
+		$("#search-items").val("Search term");
 	});
 
 	$("#search-items").focus(function() {
@@ -120,6 +124,12 @@ $(document).ready(function() {
 	}).blur(function() {
 		if ($(this).val() == "")
 			$(this).val("Search term");
+	});
+
+	// When re-focusing on the search box, display the previous seach results.
+	$("#search-items").focus(function() {
+		if ($(this).val() != "" && $(this).val() != "Search term")
+			$("#items-box").html(searchResults);
 	});
 
 	$("#search-items").bind("input", function() {
