@@ -64,7 +64,7 @@ def getItems(request, marketGroupID):
 
   itemQuery = Item.objects.filter(marketGroupID = marketGroup,
                                   published=True).order_by("typeName")
-  items = __getCPUandPG(itemQuery)
+  items = getCPUandPG(itemQuery)
 
   return render_to_response("items.html", locals())
 
@@ -80,6 +80,6 @@ def searchItems(request, typeName):
 
   itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True,
       groupID__categoryID__in=CATEGORIES_ITEMS)
-  items = __getCPUandPG(itemQuery)
+  items = getCPUandPG(itemQuery)
   return render_to_response("items.html", locals())
 
