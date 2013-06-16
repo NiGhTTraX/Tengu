@@ -90,6 +90,11 @@ $(document).ready(function() {
 						loadFit(data, r.tab, r.fit);
 					}
 			});
+		else {
+			// Get fit URL and update the browser URL.
+			var fitURL = $("#fit-tab" + fitID).data("url");
+			window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
+		}
 	});
 
 	// Prevent the welcome tab button from bubbling up.
