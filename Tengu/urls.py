@@ -25,5 +25,5 @@ urlpatterns = patterns('',
     url(r'^getFits/(\d+)/$', 'service.views.ajax.getFits'),
     url(r'^newFit/(\d+)/$', 'service.views.ajax.newFit'),
     url(r'^fit/([0-9a-zA-z]+)/$', 'ui.views.index.home'),
-    url(r'^getFit/([0-9a-zA-z]+)/$', 'service.views.ajax.getFit'),
+    url(r'^getFit/([0-9a-zA-z]+)/$', 'service.views.api.viewFit'),
 )

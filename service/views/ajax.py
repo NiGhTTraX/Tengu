@@ -121,39 +121,3 @@ def newFit(request, typeID):
 
   return HttpResponse(json.dumps(response), mimetype="application/json")
 
-def getFit(request, fitID):
-  """Get a fit by ID and render it.
-
-  Returns:
-    JSON response containing fitID, fitURL, shipName and the html.
-  """
-  if not request.is_ajax():
-    raise Http404
-
-  try:
-    fit = Fit.objects.get(pk = fitID)
-  except Fit.DoesNotExist:
-    raise Http404
-
-  if fit.userID:
-    if fit.userID != request.user.pk:
-      return HttpResponseForbidden()
-  elif fit.sessionID != request.session.session_key:
-    return HttpResponseForbidden()
-
-  fitURL = fit.url
-
-  # Get slots.
-  slots = getSlots(fit.shipID)
-
-  template = render_to_string("fit.html", {"fit": fit, "slots": slots})
-
-  response = {
-      "fitID": fitID,
-      "fitURL": fitURL,
-      "shipName": fit.shipID.typeName,
-      "html": template
-  }
-
-  return HttpResponse(json.dumps(response), mimetype="application/json")
-

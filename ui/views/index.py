@@ -9,6 +9,7 @@ from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
 from service.models import Fit
 from service.utils import base_decode
+from service.views.api import getFit
 
 from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
 
@@ -100,13 +101,11 @@ def home(request, fitURL = None):
   # Are we viewing a fit?
   if fitURL:
     fitID = base_decode(fitURL)
-    try:
-      fit = Fit.objects.get(pk = fitID)
+    fit = getFit(request, fitID)
+    if not fit:
+      raise Http404
 
-      # Get slots.
-      slots = getSlots(fit.shipID)
-    except Fit.DoesNotExist:
-      fit = None
+    slots = getSlots(fit.shipID)
 
   return render(request, 'index.html', locals())
 
