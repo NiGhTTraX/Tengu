@@ -78,7 +78,7 @@ def __getExpandedGroups(request):
   expandedGroups = []
   if "expandedMarketGroups" in request.COOKIES:
     cookie = json.loads(request.COOKIES["expandedMarketGroups"])
-    expandedGroups = [long(x) for x in cookie]
+    expandedGroups = [int(x) for x in cookie]
 
   return expandedGroups
 

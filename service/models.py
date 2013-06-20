@@ -15,7 +15,6 @@ class Fit(models.Model):
       (PRIVATE, "PRIVATE")
   )
 
-  fitID = models.AutoField(primary_key = True)
   fitName = models.CharField(max_length = 200)
   fitDescription = models.TextField(null = True)
   shipID = models.ForeignKey("inv.Item")
@@ -43,7 +42,7 @@ class Fit(models.Model):
 
   @property
   def url(self):
-    return base_encode(self.fitID)
+    return base_encode(self.pk)
 
 
 class Profile(models.Model):
