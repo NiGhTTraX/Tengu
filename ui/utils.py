@@ -92,11 +92,14 @@ def getSlots(ship):
   try:
     missileSlots = int(TypeAttributes.objects.get(typeID=ship,
         attributeID=ATTRIBUTE_MISSILESLOTS).value)
+  except TypeAttributes.DoesNotExist:
+    missileSlots = 0
+
+  try:
     turretSlots = int(TypeAttributes.objects.get(typeID=ship,
         attributeID=ATTRIBUTE_TURRETSLOTS).value)
   except TypeAttributes.DoesNotExist:
-    # This is a T3 ship.
-    missileSlots = turretSlots = 0
+    turretSlots = 0
 
   return {
       "highSlots": highSlots,
