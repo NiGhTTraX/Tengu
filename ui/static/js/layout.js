@@ -55,7 +55,10 @@ function adjustLeftSidebar() {
 function updateResizeHandle() {
 	var top = resizeHandle.position().top;
 
-	$.cookie("leftSidebarResizeHandler", top, COOKIE_EXPIRE);
+	$.cookie("leftSidebarResizeHandler", top, {
+			expires: COOKIE_EXPIRE,
+			path: "/"
+	});
 }
 
 function adjustColumns() {
