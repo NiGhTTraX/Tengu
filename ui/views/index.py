@@ -107,5 +107,13 @@ def home(request, fitURL = None):
 
     slots = getSlots(fit.shipID)
 
+  """
+  Some views require the session key. In order to get the key, a session must
+  exist. Django only creates a new session when it is marked as modified, so we
+  check if a session exists and in case it doesn't, we create one.
+  """
+  if request.session.session_key is None:
+    request.session.modified = True
+
   return render(request, 'index.html', locals())
 
