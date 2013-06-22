@@ -46,7 +46,7 @@ function closeTab(that) {
 	// attributes.
 	var obj = that.data("obj");
 	if (obj)
-		obj.remove();
+		$(obj).each(function() { $(this).remove(); });
 	else
 		$(that.data("id")).remove();
 	that.remove();
@@ -85,7 +85,7 @@ $(document).ready(function() {
 
 			var obj = $(this).data("obj");
 			if (obj)
-				obj.show();
+				$(obj).each(function() { $(this).show(); });
 			else
 				$($(this).data("id")).show();
 		}
