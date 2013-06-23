@@ -1,11 +1,10 @@
 from django.http import Http404, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render_to_response
-from django.template.loader import render_to_string
 from django.db.models import Q
 
 from service.models import Fit
-from ui.utils import getSlots
 from inv.models import Item
+from ui.views.render import renderFit
 
 from inv.const import CATEGORIES_SHIPS
 
@@ -102,21 +101,15 @@ def newFit(request, typeID):
     fit.sessionID = request.session.session_key
 
   fit.save()
-  fitID = fit.pk
 
-  # Get the URL for this new fit.
-  fitURL = fit.url
-
-  # Get slots.
-  slots = getSlots(typeID)
-
-  template = render_to_string("fit.html", {"fit": fit, "slots": slots})
+  renders = renderFit(request, fit)
 
   response = {
-      "fitID": fitID,
-      "fitURL": fitURL,
+      "fitID": fit.pk,
+      "fitURL": fit.url,
       "shipName": ship.typeName,
-      "html": template
+      "wheel": renders["wheel"],
+      "stats": renders["stats"]
   }
 
   return HttpResponse(json.dumps(response), mimetype="application/json")

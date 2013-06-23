@@ -1,0 +1,121 @@
+{% extends "stats_widget.html" %}
+{% load staticfiles %}
+{% load humanize %}
+
+{% block widget_id %}stats_defense{% endblock %}
+
+{% block widget_title %}Defense{% endblock %}
+
+{% block widget_content %}
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
+		<th><img src="{% static "images/22_32_20.png" %}" alt="EM" title="EM"></th>
+		<th><img src="{% static "images/22_32_18.png" %}" alt="Thermal" title="Thermal"></th>
+		<th><img src="{% static "images/22_32_17.png" %}" alt="Kinetic" title="Kinetic"></th>
+		<th><img src="{% static "images/22_32_19.png" %}" alt="Explosive" title="Explosive"></th>
+	</tr>
+	<tr>
+		<td>
+			<img src="{% static "images/1_64_13.png" %}" alt="Shield" title="Shield"
+			width="32" height="32">
+		</td>
+		<td>
+			{{ fit.shield.capacity|intcomma }} hp<br/>
+			{{ fit.shield.recharge|intcomma }} s
+		</td>
+		<td>
+			<div class="percentage em">
+				<div class="full" style="width: {{ fit.shield.resists.em }}%"></div>
+				<div class="value">{{ fit.shield.resists.em }} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage thermal">
+				<div class="full" style="width: {{ fit.shield.resists.thermal}}%"></div>
+				<div class="value">{{ fit.shield.resists.thermal}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage kinetic">
+				<div class="full" style="width: {{ fit.shield.resists.kinetic}}%"></div>
+				<div class="value">{{ fit.shield.resists.kinetic}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage explosive">
+				<div class="full" style="width: {{ fit.shield.resists.explosive}}%"></div>
+				<div class="value">{{ fit.shield.resists.explosive}} %</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="{% static "images/1_64_9.png" %}" alt="Armor" title="Armor"
+			width="32" height="32">
+		</td>
+		<td>
+			{{ fit.armor.capacity|intcomma }} hp<br/>
+		</td>
+		<td>
+			<div class="percentage em">
+				<div class="full" style="width: {{ fit.armor.resists.em }}%"></div>
+				<div class="value">{{ fit.armor.resists.em }} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage thermal">
+				<div class="full" style="width: {{ fit.armor.resists.thermal}}%"></div>
+				<div class="value">{{ fit.armor.resists.thermal}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage kinetic">
+				<div class="full" style="width: {{ fit.armor.resists.kinetic}}%"></div>
+				<div class="value">{{ fit.armor.resists.kinetic}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage explosive">
+				<div class="full" style="width: {{ fit.armor.resists.explosive}}%"></div>
+				<div class="value">{{ fit.armor.resists.explosive}} %</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<img src="{% static "images/2_64_12.png" %}" alt="Hull" title="Hull"
+			width="32" height="32">
+		</td>
+		<td>
+			{{ fit.hull.capacity|intcomma }} hp<br/>
+		</td>
+		<td>
+			<div class="percentage em">
+				<div class="full" style="width: {{ fit.hull.resists.em }}%"></div>
+				<div class="value">{{ fit.hull.resists.em }} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage thermal">
+				<div class="full" style="width: {{ fit.hull.resists.thermal}}%"></div>
+				<div class="value">{{ fit.hull.resists.thermal}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage kinetic">
+				<div class="full" style="width: {{ fit.hull.resists.kinetic}}%"></div>
+				<div class="value">{{ fit.hull.resists.kinetic}} %</div>
+			</div>
+		</td>
+		<td>
+			<div class="percentage explosive">
+				<div class="full" style="width: {{ fit.hull.resists.explosive}}%"></div>
+				<div class="value">{{ fit.hull.resists.explosive}} %</div>
+			</div>
+		</td>
+	</tr>
+</table>
+{% endblock %}
+

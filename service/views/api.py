@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.template.loader import render_to_string
 
 from service.models import Fit
-from ui.utils import getSlots
+from ui.views.render import renderFit
 
 import json
 
@@ -47,19 +47,18 @@ def viewFit(request, fitID, returnType = "json"):
   if not fit:
     raise Http404
 
-  slots = getSlots(fit.shipID)
-  template = render_to_string("fit.html", {"fit": fit, "slots": slots})
+  renders = renderFit(request, fit)
 
   if returnType == "html":
-    return template
+    return renders.wheel
 
   if returnType == "json":
-    fitURL = fit.url
     response = {
         "fitID": fitID,
-        "fitURL": fitURL,
+        "fitURL": fit.url,
         "shipName": fit.shipID.typeName,
-        "html": template
+        "wheel": renders["wheel"],
+        "stats": renders["stats"]
     }
 
     return HttpResponse(json.dumps(response), mimetype="application/json")

@@ -1,8 +1,8 @@
 <div class="tabs sortable">
-  <ul id="tabs-fits" data-id="#fitting-window">
+  <ul id="tabs-fits" data-id="#fitting-window, #stats">
     <li {% if fit %}style="display: none"{% endif %} class="welcome {% if not fit %}current-tab{% endif %}">New fit</li>
     {% if fit %}
-    <li id="fit-tab{{ fit.pk }}" class="current-tab" data-id="#fit{{ fit.pk }}" data-url="{{ fit.url }}">
+    <li id="fit-tab{{ fit.pk }}" class="current-tab" data-id="#fit{{ fit.pk }}, #stats{{ fit.pk }}" data-url="{{ fit.url }}">
       <div class="title">{{ fit.fitName }}</div>
       <div class="close"></div>
     </li>
@@ -20,8 +20,12 @@
   </div>
 
   {% if fit %}
-    <div class="tab-content" id="fit{{ fit.pk }}">
+  <div class="tab-content" id="fit{{ fit.pk }}">
+    {% if renders %}
+      {{ renders.wheel }}
+    {% else %}
       {% include "fit.html" %}
+    {% endif %}
     </div>
   {% endif %}
 </div>

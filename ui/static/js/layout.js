@@ -129,4 +129,6 @@ $(document).ready(function() {
 			drag: adjustLeftSidebar,
 			stop: updateResizeHandle
 	});
+
+	$.cookie.json = true;
 });

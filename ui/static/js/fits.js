@@ -1,24 +1,32 @@
-function loadFit(data, tab, fit) {
-	// Get the ship name.
+function loadFit(data, tab, fit, stats) {
 	var name = data["shipName"];
-
-	// Get the fit ID.
 	var fitID = data["fitID"];
-
-	// Get the fit's short URL.
 	var fitURL = data["fitURL"];
 
-	// Get the HTML.
-	var html = data["html"];
-
 	$(".title", tab).text(name);
-	tab.data("id", "#fit" + fitID);
+	tab.removeData("obj");
+	tab.data("id", "#fit" + fitID + ", #stats" + fitID);
+	tab.data("fitID", fitID);
 	tab.data("url", fitURL);
 	tab.attr("id", "fit-tab" + fitID);
 
 	fit.attr("id", "fit" + fitID);
 	fit.removeClass("vcw");
-	fit.html(html);
+	fit.html(data["wheel"]);
+
+	stats.attr("id", "stats" + fitID);
+	stats.removeClass("vcw");
+	stats.html(data["stats"]);
+
+	stats.sortable({
+			axis: "y",
+			containment: $("#right-sidebar"),
+			handle: "h1",
+			update: function(e ,ui) {
+				updateWidgets($(this));
+				syncPositions($(this), ui);
+			}
+	});
 
 	// Change the URL.
 	window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
@@ -50,12 +58,18 @@ function newTab() {
 	var fit = $("<div></div>").append(loaderContent);
 	fit.addClass("tab-content vcw");
 
-	tab.data("obj", fit);
+	// Create a new stats list.
+	$("#stats .tab-content").hide();
+	var stats = $("<div></div>").append(loaderContent.clone());
+	stats.addClass("tab-content vcw");
+
+	tab.data("obj", $([fit, stats]));
 	$("#tabs-fits").append(tab);
 	$("#tabs-fits").sortable("refresh");
 	$("#fitting-window").append(fit);
+	$("#stats").append(stats);
 
-	return {"tab": tab, "fit": fit};
+	return {"tab": tab, "fit": fit, "stats": stats};
 }
 
 function newFit(id) {
@@ -65,7 +79,7 @@ function newFit(id) {
 		url: "/newFit/" + id + "/",
 		method: "POST",
 		dataType: "json",
-		success: function(data) { loadFit(data, r.tab, r.fit); }
+		success: function(data) { loadFit(data, r.tab, r.fit, r.stats); }
 	});
 }
 
@@ -82,15 +96,15 @@ $(document).ready(function() {
 
 		// Only create a new tab if there isn't already one. If there is one, switch
 		// to it.
-		if (!focusTab("#fit-tab" + fitID))
+		if (!focusTab("#fit-tab" + fitID)) {
+			var r = newTab();
 			$.ajax({
 					url: "/getFit/" + fitID + "/",
 					success: function(data) {
-						var r = newTab();
-						loadFit(data, r.tab, r.fit);
+						loadFit(data, r.tab, r.fit, r.stats);
 					}
 			});
-		else {
+		} else {
 			// Get fit URL and update the browser URL.
 			var fitURL = $("#fit-tab" + fitID).data("url");
 			window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
@@ -125,10 +139,12 @@ $(document).ready(function() {
 
 	// Manage history states.
 	$("#tabs-fits").on("click", "li:not(.current-tab)", function() {
-		var fitID = $(this).data("id").substr(4);		// #fit123
-		var fitURL = $(this).data("url");
+		var fitID = $(this).data("fitID");
+		if (fitID) {
+			var fitURL = $(this).data("url");
 
-		window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
+			window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
+		}
 	});
 
 	window.onpopstate = function(e) {

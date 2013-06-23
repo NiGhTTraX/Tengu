@@ -1,8 +1,17 @@
+#right-sidebar {
+	position: relative;
+}
+
+#stats {
+	height: inherit;
+}
+
 /* Stats widget */
 .stats-widget {
 	width: 276px;
 	border: 2px solid #323431;
 	margin-bottom: 5px;
+	color: #c4c4c4;
 }
 
 .stats-widget div.title {
@@ -35,3 +44,67 @@
 .stats-widget div.content {
 	padding: 5px;
 }
+
+.stats-widget table td, table th {
+	vertical-align: middle;
+	padding: 3px;
+}
+
+.percentage {
+	position: relative;
+	width: 32px;
+	height: 19px;
+	z-index: 1;
+}
+
+.percentage.em {
+	background-color: #1f2d36;
+}
+
+.percentage.em .full {
+	background-color: #195e8c;
+}
+
+.percentage.thermal {
+	background-color: #361f1f;
+}
+
+.percentage.thermal .full {
+	background-color: #8c1919;
+}
+
+.percentage.kinetic {
+	background-color: #313131;
+}
+
+.percentage.kinetic .full {
+	background-color: #737373;
+}
+
+.percentage.explosive {
+	background-color: #372e20;
+}
+
+.percentage.explosive .full {
+	background-color: #8c5e19;
+}
+
+.percentage .full {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: inherit;
+	z-index: 2;
+}
+
+.percentage .value {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: inherit;
+	height: inherit;
+	z-index: 3;
+	text-align: center;
+	margin-top: 3px;
+}
+

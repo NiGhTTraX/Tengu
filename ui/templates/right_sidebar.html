@@ -1,5 +1,8 @@
-<ul id="stats">
-  {% for widget in widgets %}
-    {% include widget.0|add:".html" %}
-  {% endfor %}
-</ul>
+<div id="stats">
+  {% if renders %}
+  <div class="tab-content" id="stats{{ fitID }}">
+    {{ renders.stats }}
+  </div>
+  {% endif %}
+</div>
+

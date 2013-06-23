@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.conf import settings
 
@@ -10,41 +11,12 @@ from inv.models import MarketGroup, Item
 from service.models import Fit
 from service.utils import base_decode
 from service.views.api import getFit
+from ui.views.render import renderFit, getWidgets
 
 from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
 
 import json
 
-
-def __getWidgets(request):
-  """Return the positions and statuses of the stats widgets.
-
-  Args:
-    request: Django request
-
-  Returns:
-    A list of tuples in the form (widget_name, widget_status). widget_status is
-    True if the widget is expanded, False otherwise. widget_name is the name of
-    the template, minus the .html extension (needs to be added in the template).
-
-  Excepts:
-    ValueError.
-  """
-  widgetPositions = ["stats1", "stats2"]
-  widgetStatuses = [True] * len(widgetPositions)
-
-  if "widgets" in request.COOKIES and "widgetStatuses" in request.COOKIES:
-    try:
-      cookie = json.loads(request.COOKIES["widgets"])
-      if sorted(cookie) != sorted(widgetPositions): # sanity check
-        raise ValueError
-      widgetPositions = cookie
-
-      cookie = json.loads(request.COOKIES["widgetStatuses"])
-      widgetStatuses = [x == "true" for x in cookie]
-    except ValueError: pass
-
-  return zip(widgetPositions, widgetStatuses)
 
 def __getResizeHandler(request):
   """Returns the left sidebar resize handler position."""
@@ -88,7 +60,7 @@ def home(request, fitURL = None):
   siteName = settings.SITE_NAME
 
   # Get the stats widgets.
-  widgets = __getWidgets(request)
+  widgets = getWidgets(request)
 
   # Get the left sidebar resize handler.
   resizeHandlerTop = __getResizeHandler(request)
@@ -105,7 +77,7 @@ def home(request, fitURL = None):
     if not fit:
       raise Http404
 
-    slots = getSlots(fit.shipID)
+    renders = renderFit(request, fit)
 
   """
   Some views require the session key. In order to get the key, a session must
