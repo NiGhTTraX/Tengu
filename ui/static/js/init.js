@@ -1,3 +1,4 @@
+// Setup CSRF protection.
 var csrftoken = $.cookie("csrftoken");
 
 function csrfSafeMethod(method) {
@@ -13,4 +14,7 @@ $.ajaxSetup({
 		}
 	}
 });
+
+// Set the jQuery cookie plugin to save content in JSON format.
+$.cookie.json = true;
 
