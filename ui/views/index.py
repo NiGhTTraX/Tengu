@@ -3,7 +3,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, render_to_response
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.conf import settings
+from django.contrib.sites.models import get_current_site
 
 from ui.utils import buildMarketTree, getSlots
 from dogma.models import TypeAttributes
@@ -57,7 +57,7 @@ def __getExpandedGroups(request):
 @ensure_csrf_cookie
 def home(request, fitURL = None):
   """Home page view."""
-  siteName = settings.SITE_NAME
+  siteName = get_current_site(request).name
 
   # Get the stats widgets.
   widgets = getWidgets(request)
