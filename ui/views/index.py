@@ -4,6 +4,7 @@ from django.shortcuts import render, render_to_response
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.sites.models import get_current_site
+from django.core.cache import cache
 
 from ui.utils import buildMarketTree, getSlots
 from dogma.models import TypeAttributes
@@ -31,19 +32,33 @@ def __getResizeHandler(request):
 def __getMarketTree(request, marketGroupsToGet, includeItems = False):
   """Gets the market tree structure and status.
 
-  Params:
+  First, check if the tree is in cache. If so, return it directly. Otherwise,
+  fetch it from the database and then store it in cache.
+
+  Args:
     request: Django request.
     marketGroupsToGet: A list of integer ids.
+    includeItems: Boolean value specifying wether or not to include items under
+    leaf nodes.
 
   Returns:
-    A list of two elements. The first is the market tree and the second is the
-    expanded groups.
+    A serialized market tree in the form of a list of tuples. See
+    ui.utils.buildMarketTree for more details.
   """
-  marketGroups = []
-  for group in marketGroupsToGet:
-    marketGroups.extend(buildMarketTree(MarketGroup.objects.get(pk=group),
-                                        includeItems))
-  return marketGroups
+  marketTree = []
+
+  # Get all the MarketGroup instances in one query.
+  marketGroups = MarketGroup.objects.filter(marketGroupID__in=marketGroupsToGet).order_by("marketGroupName")
+
+  for group in marketGroups:
+    tree = cache.get("marketTree_%d_%d" % (group.pk, int(includeItems)))
+    if tree is None:
+      tree = buildMarketTree(group, includeItems)
+      cache.set("marketTree_%d_%d" % (group.pk, int(includeItems)), tree)
+
+    marketTree.extend(tree)
+
+  return marketTree
 
 def __getExpandedGroups(request):
   # Now get which ones should be expanded.
