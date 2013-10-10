@@ -3,8 +3,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class MarketGroup(models.Model):
-  marketGroupID = models.AutoField(primary_key=True)
-  parentGroupID = models.ForeignKey("self", db_column="parentGroupID", null=True)
+  marketGroupID = models.IntegerField(primary_key=True)
+  parentGroupID = models.ForeignKey("self", db_column="parentGroupID",
+      null=True, on_delete=models.DO_NOTHING)
   marketGroupName = models.CharField(max_length=200, null=True)
   description = models.CharField(max_length=3000, null=True)
   iconID = models.IntegerField(null=True)
@@ -16,7 +17,7 @@ class MarketGroup(models.Model):
 
 
 class Category(models.Model):
-  categoryID = models.AutoField(primary_key=True)
+  categoryID = models.IntegerField(primary_key=True)
   categoryName = models.CharField(max_length=100)
   description = models.CharField(max_length=3000)
   published = models.BooleanField()
@@ -31,43 +32,45 @@ class Category(models.Model):
 
 
 class Group(models.Model):
-  groupID = models.AutoField(primary_key=True)
-  categoryID = models.ForeignKey(Category, db_column="categoryID")
-  groupName = models.CharField(max_length=100)
-  description = models.CharField(max_length=3000)
+  groupID = models.IntegerField(primary_key=True)
+  categoryID = models.ForeignKey(Category, db_column="categoryID",
+      on_delete=models.DO_NOTHING)
+  groupName = models.CharField(max_length=100, null=True)
+  description = models.CharField(max_length=3000, null=True)
   # unused fields
   groupNameID = models.IntegerField(null=True)
   dataID = models.IntegerField(null=True)
-  IconID = models.IntegerField()
-  useBasePrice = models.BooleanField()
-  allowManufacture = models.BooleanField()
-  allowRecycler = models.BooleanField()
-  anchored = models.BooleanField()
-  anchorable = models.BooleanField()
-  fittableNonSingleton = models.BooleanField()
-  published = models.BooleanField()
+  iconID = models.IntegerField(null=True)
+  useBasePrice = models.NullBooleanField()
+  allowManufacture = models.NullBooleanField()
+  allowRecycler = models.NullBooleanField()
+  anchored = models.NullBooleanField()
+  anchorable = models.NullBooleanField()
+  fittableNonSingleton = models.NullBooleanField()
+  published = models.NullBooleanField()
 
   def __str__(self):
     return self.groupName
 
 
 class Item(models.Model):
-  typeID = models.AutoField(primary_key=True)
-  groupID = models.ForeignKey(Group, db_column="GroupID", null=True)
-  typeName = models.CharField(max_length=100, null=True)
+  typeID = models.IntegerField(primary_key=True)
+  groupID = models.ForeignKey(Group, db_column="groupID", null=True,
+      on_delete=models.DO_NOTHING)
+  typeName = models.CharField(max_length=100, db_index=True, null=True)
   description = models.CharField(max_length=3000, null=True)
   mass = models.FloatField(null=True)
   volume = models.FloatField(null=True)
   capacity = models.FloatField(null=True)
   published = models.NullBooleanField()
   marketGroupID = models.ForeignKey(MarketGroup, db_column="marketGroupID",
-      null=True)
+      null=True, on_delete=models.DO_NOTHING)
   # unused fields
   radius = models.FloatField(null=True)
   portionSize = models.IntegerField(null=True)
   basePrice = models.FloatField(null=True)
   chanceOfDuplicating = models.FloatField(null=True)
-  IconID = models.IntegerField(null=True)
+  iconID = models.IntegerField(null=True)
   soundID = models.IntegerField(null=True)
   copyTypeID = models.IntegerField(null=True)
   graphicID = models.IntegerField(null=True)
@@ -78,8 +81,17 @@ class Item(models.Model):
 
   attributes = models.ManyToManyField("dogma.Attribute",
       through="dogma.TypeAttributes")
+  effects = models.ManyToManyField("dogma.Effect",
+      through="dogma.TypeEffects")
 
-  effects = models.ManyToManyField("dogma.Effect", through="dogma.TypeEffects")
+  categoryID = models.ForeignKey(Category, null = True,
+      on_delete=models.DO_NOTHING)
+  durationAttributeID = models.IntegerField(null=True)
+  dischargeAttributeID = models.IntegerField(null=True)
+  rangeAttributeID = models.IntegerField(null=True)
+  falloffAttributeID = models.IntegerField(null=True)
+  trackingSpeedAttributeID = models.IntegerField(null=True)
+  fittableNonSingleton = models.NullBooleanField()
 
   def __str__(self):
     return self.typeName
