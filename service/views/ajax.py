@@ -35,6 +35,12 @@ def searchShipsAndFits(request, name):
 
   First, get the ships that will include links to create new fittings. Then get
   all the existing fits that contain the provided keywords.
+
+  You have to check if the items belong to a valid market group i.e. the ones
+  being displayed in the market tree. To do this, you have to check the
+  categoryID, which is a foreign key. Thus, we use categoryID_id to save a
+  query. This column, while normally not in the invTypes table, is set by Eos
+  during cache generation.
   """
   if not request.is_ajax():
     raise Http404
@@ -42,7 +48,7 @@ def searchShipsAndFits(request, name):
   fits = []
   # First, get the ships.
   itemQuery = Item.objects.filter(typeName__icontains=name, published=True,
-      groupID__categoryID__in=CATEGORIES_SHIPS)
+      categoryID_id__in=CATEGORIES_SHIPS)
   fits = [(0, item) for item in itemQuery]
 
   # Then, the fits.
