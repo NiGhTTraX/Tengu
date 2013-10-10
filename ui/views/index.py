@@ -6,7 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.sites.models import get_current_site
 from django.core.cache import cache
 
-from ui.utils import buildMarketTree, getSlots
+from ui.utils import MarketTree, getSlots
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
 from service.models import Fit
@@ -43,7 +43,7 @@ def __getMarketTree(request, marketGroupsToGet, includeItems = False):
 
   Returns:
     A serialized market tree in the form of a list of tuples. See
-    ui.utils.buildMarketTree for more details.
+    ui.utils.MarketTree for more details.
   """
   marketTree = []
 
@@ -53,7 +53,7 @@ def __getMarketTree(request, marketGroupsToGet, includeItems = False):
   for group in marketGroups:
     tree = cache.get("marketTree_%d_%d" % (group.pk, int(includeItems)))
     if tree is None:
-      tree = buildMarketTree(group, includeItems)
+      tree = MarketTree(group, includeItems).build()
       cache.set("marketTree_%d_%d" % (group.pk, int(includeItems)), tree)
 
     marketTree.extend(tree)
@@ -84,6 +84,12 @@ def home(request, fitURL = None):
   marketGroupsItems = __getMarketTree(request, MARKET_GROUPS_ITEMS)
   marketGroupsShips = __getMarketTree(request, MARKET_GROUPS_SHIPS, True)
   expandedGroups = __getExpandedGroups(request)
+
+  # Unpack some constants
+  INCREASE_INDENT = MarketTree.INCREASE_INDENT
+  DECREASE_INDENT = MarketTree.DECREASE_INDENT
+  GROUP = MarketTree.GROUP
+  ITEM = MarketTree.ITEM
 
   # Are we viewing a fit?
   if fitURL:

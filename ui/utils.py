@@ -1,43 +1,66 @@
 # Utility functions
+from django.core.cache import cache
+
 from inv.models import MarketGroup, Item
 from dogma.models import TypeAttributes
 
 from dogma.const import *
 
 
-def buildMarketTree(marketGroup = None, includeItems = False, level = 0):
-  """Return a tree of the market groups.
+class MarketTree(object):
+  GROUP = 0  # object is a MarketGroup instance.
+  ITEM = 1  # object is an Item instance.
+  INCREASE_INDENT = 2
+  DECREASE_INDENT = 3
 
-  Args:
-    marketGroup: MarketGroup instance or integer.
-    includeItems: Whether to just return groups, or include items as well.
-    level: Level of indentation.
+  def __init__(self, marketGroup, includeItems = False):
+    """
+    Args:
+      marketGroup: MarketGroup instance.
+      includeItems: Whether to just return groups, or include items as well.
+    """
+    self.marketGroup = marketGroup
+    self.includeItems = includeItems
 
-  Returns:
-    A list of tuples.
-  """
-  if marketGroup is None:
-    return []
+  def build(self):
+    """Return a serialized tree of the market groups.
 
-  subgroups = MarketGroup.objects.filter(parentGroupID =
-      marketGroup).order_by("marketGroupName")
+    Returns:
+      A list of tuples in the form (type, level, object, isLeaf).
+    """
+    return self.__build(self.marketGroup, self.includeItems)
 
-  result = [(0, level, marketGroup, bool(subgroups) or includeItems)]
+  def __build(self, marketGroup, includeItems, level = 0):
+    if marketGroup is None:
+      return []
 
-  if not subgroups:
-    if includeItems:
-      items = Item.objects.filter(marketGroupID = marketGroup, published = True)
-      result.append((1, level + 1, marketGroup.marketGroupID))
-      result.extend([(2, level + 1, item) for item in items])
-      result.append((-1, 0, 0))
+    subgroups = MarketGroup.objects.filter(
+        parentGroupID = marketGroup).order_by("marketGroupName")
+
+    # Add the group itself.
+    result = [(self.GROUP, level, marketGroup, bool(subgroups) or includeItems)]
+
+    if not subgroups:
+      if includeItems:
+        items = Item.objects.filter(marketGroupID = marketGroup, published = True)
+
+        # Increase the level of indentation, add the items, and then decrease the
+        # level of indentation.
+        result.append((self.INCREASE_INDENT, level + 1, marketGroup.pk))
+        result.extend([(self.ITEM, level + 1, item) for item in items])
+        result.append((self.DECREASE_INDENT, 0, 0))
+
+      return result
+
+    # Increase the level of indentation, add the subtree, and then decrease the
+    # level of indentation.
+    result.append((self.INCREASE_INDENT, level + 1, marketGroup.pk))
+    for group in subgroups:
+      result.extend(self.__build(group, includeItems, level + 1))
+    result.append((self.DECREASE_INDENT, 0, 0))
+
     return result
 
-  result.append((1, level + 1, marketGroup.marketGroupID))
-  for group in subgroups:
-    result.extend(buildMarketTree(group, includeItems, level + 1))
-  result.append((-1, 0, 0))
-
-  return result
 
 def getCPUandPG(itemsIter):
   """Returns a list of (item, cpu, pg) tuples.
@@ -58,6 +81,7 @@ def getCPUandPG(itemsIter):
     items.append((item, cpu, pg))
 
   return items
+
 
 def getSlots(ship):
   """Get the number of slots for a given ship.
