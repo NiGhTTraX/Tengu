@@ -1,8 +1,10 @@
 *.log
 *.pot
 *.pyc
-local_settings.py
 
 # Vim Swap files
 *.swp
 *.swo
+
+# coverage.py
+.coverage
