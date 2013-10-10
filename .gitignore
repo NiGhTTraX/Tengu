@@ -8,3 +8,6 @@
 
 # coverage.py
 .coverage
+
+# sqlite files
+*.db
