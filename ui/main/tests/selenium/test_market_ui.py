@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from selenose.cases import LiveServerTestCase
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,16 +10,6 @@ from inv.const import MARKET_GROUP_SHIPS, CATEGORIES_SHIPS
 
 
 class TestMarketUI(LiveServerTestCase):
-
-  @classmethod
-  def setUpClass(cls):
-    cls.selenium = WebDriver()
-    super(TestMarketUI, cls).setUpClass()
-
-  @classmethod
-  def tearDownClass(cls):
-    cls.selenium.quit()
-    super(TestMarketUI, cls).tearDownClass()
 
   def setUp(self):
     # Create some items and groups.
@@ -33,25 +23,25 @@ class TestMarketUI(LiveServerTestCase):
         categoryID_id=6, published=True)
 
     # Clear cookies.
-    self.selenium.delete_all_cookies()
+    self.driver.delete_all_cookies()
 
     # Go to the home page.
-    self.selenium.get(self.live_server_url)
+    self.driver.get(self.live_server_url)
 
     # Store some commonly used elements.
-    self.mg1 = self.selenium.find_element_by_id("mg1")
-    self.mg2 = self.selenium.find_element_by_id("mg2")
-    self.sh1 = self.selenium.find_element_by_id("sh1")
-    self.search_box = self.selenium.find_element_by_id("search-items")
-    self.items_box = self.selenium.find_element_by_id("items-box")
-    self.tab_ships = self.selenium.find_element_by_id("tab-ships")
-    self.tab_items = self.selenium.find_element_by_id("tab-items")
+    self.mg1 = self.driver.find_element_by_id("mg1")
+    self.mg2 = self.driver.find_element_by_id("mg2")
+    self.sh1 = self.driver.find_element_by_id("sh1")
+    self.search_box = self.driver.find_element_by_id("search-items")
+    self.items_box = self.driver.find_element_by_id("items-box")
+    self.tab_ships = self.driver.find_element_by_id("tab-ships")
+    self.tab_items = self.driver.find_element_by_id("tab-items")
 
   def __ajaxComplete(self, driver):
     return driver.execute_script("return jQuery.active") == 0
 
   def __waitForAjax(self):
-    WebDriverWait(self.selenium, 1).until(self.__ajaxComplete,
+    WebDriverWait(self.driver, 1).until(self.__ajaxComplete,
         "AJAX call timed out")
 
   def test_switch_tabs(self):
@@ -81,7 +71,7 @@ class TestMarketUI(LiveServerTestCase):
     self.mg1.click()
     self.mg2.click()
     self.sh1.click()
-    WebDriverWait(self.selenium, 1).until(EC.presence_of_element_located(
+    WebDriverWait(self.driver, 1).until(EC.presence_of_element_located(
         (By.ID, "fits")), "Load fits timed out")
     content = self.items_box.text.strip()
     self.assertTrue(content)
@@ -135,10 +125,10 @@ class TestMarketUI(LiveServerTestCase):
     self.mg1.click()
 
     # Refreself.sh the page.
-    self.selenium.refresh()
-    self.mg1 = self.selenium.find_element_by_id("mg1")
-    self.mg2 = self.selenium.find_element_by_id("mg2")
-    self.sh1 = self.selenium.find_element_by_id("sh1")
+    self.driver.refresh()
+    self.mg1 = self.driver.find_element_by_id("mg1")
+    self.mg2 = self.driver.find_element_by_id("mg2")
+    self.sh1 = self.driver.find_element_by_id("sh1")
 
     # Tree self.should be persistent.
     self.assertTrue(self.mg2.is_displayed())
@@ -148,10 +138,10 @@ class TestMarketUI(LiveServerTestCase):
     self.mg2.click()
 
     # Refreself.sh the page
-    self.selenium.refresh()
-    self.mg1 = self.selenium.find_element_by_id("mg1")
-    self.mg2 = self.selenium.find_element_by_id("mg2")
-    self.sh1 = self.selenium.find_element_by_id("sh1")
+    self.driver.refresh()
+    self.mg1 = self.driver.find_element_by_id("mg1")
+    self.mg2 = self.driver.find_element_by_id("mg2")
+    self.sh1 = self.driver.find_element_by_id("sh1")
 
     # Tree self.should be persistent.
     self.assertTrue(self.mg2.is_displayed())
@@ -174,7 +164,7 @@ class TestMarketUI(LiveServerTestCase):
 
   def test_search(self):
     self.search_box.send_keys("item")
-    WebDriverWait(self.selenium, 2).until(EC.presence_of_element_located(
+    WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(
         (By.ID, "fits")), "Search timed out")
     self.assertTrue("item1" in self.items_box.text)
 

@@ -11,3 +11,6 @@
 
 # sqlite files
 *.db
+
+# Jenkins
+/reports
