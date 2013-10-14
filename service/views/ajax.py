@@ -117,5 +117,5 @@ def newFit(request, typeID):
       #"stats": renders["stats"]
   }
 
-  return HttpResponse(json.dumps(response), mimetype="application/json")
+  return HttpResponse(json.dumps(response), content_type="application/json")
 
