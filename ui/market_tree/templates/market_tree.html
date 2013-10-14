@@ -1,0 +1,20 @@
+{% for row in marketTree %}
+  {% if row.0 == constants.INCREASE_INDENT %}
+    <div class="market-group" {% if row.1 > 0 and row.2 not in expandedGroups %}style="display: none"{% endif %}>
+  {% elif row.0 == constants.DECREASE_INDENT %}
+    </div>
+  {% elif row.0 == constants.GROUP %}
+    <div id="mg{{ row.2.marketGroupID }}" class="market-group-name {% if row.3 == False %}empty{% else %}expandable{% endif %}" style="padding-left: {% widthratio row.1 1 15 %}px">
+      <div class="toggle {% if row.2.marketGroupID in expandedGroups %}collapse{% else %}expand{% endif %}">&nbsp;</div>
+      <h1>{{ row.2.marketGroupName }}</h1>
+    </div>
+  {% elif row.0 == constants.ITEM %}
+    <div id="sh{{ row.2.typeID }}" class="market-group-name empty" style="padding-left: {% widthratio row.1 1 15 %}px">
+      <div class="toggle">&nbsp;</div>
+      <h1>{{ row.2.typeName }}</h1>
+    </div>
+  {% endif %}
+{% empty %}
+  No items
+{% endfor %}
+

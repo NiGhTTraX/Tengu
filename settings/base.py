@@ -41,7 +41,9 @@ INSTALLED_APPS = (
     'cache',
     'eos',
     'raven',
-    'ui',
+    'ui.items_box',
+    'ui.market_tree',
+    'ui.main',
     'service',
 )
 

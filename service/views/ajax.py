@@ -4,7 +4,6 @@ from django.db.models import Q
 
 from service.models import Fit
 from inv.models import Item
-from ui.views.render import renderFit
 
 from inv.const import CATEGORIES_SHIPS
 
@@ -108,14 +107,14 @@ def newFit(request, typeID):
 
   fit.save()
 
-  renders = renderFit(request, fit)
+  #renders = renderFit(request, fit)
 
   response = {
       "fitID": fit.pk,
       "fitURL": fit.url,
       "shipName": ship.typeName,
-      "wheel": renders["wheel"],
-      "stats": renders["stats"]
+      #"wheel": renders["wheel"],
+      #"stats": renders["stats"]
   }
 
   return HttpResponse(json.dumps(response), mimetype="application/json")

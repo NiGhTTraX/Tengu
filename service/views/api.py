@@ -3,7 +3,6 @@ from django.shortcuts import render_to_response
 from django.template.loader import render_to_string
 
 from service.models import Fit
-from ui.views.render import renderFit
 
 import json
 
@@ -31,38 +30,4 @@ def getFit(request, fitID):
       return None
 
   return fit
-
-def viewFit(request, fitID, returnType = "json"):
-  """Get a fit by ID and render it using the fit template.
-
-  Args:
-    returnType: can be:
-      "html": will render the fit template and return the HTML.
-      "json": will return a JSON object including fit details and the HTML.
-
-  Returns:
-    HTML or JSON. See the args section for returnType.
-  """
-  fit = getFit(request, fitID)
-  if not fit:
-    raise Http404
-
-  renders = renderFit(request, fit)
-
-  if returnType == "html":
-    return renders.wheel
-
-  if returnType == "json":
-    response = {
-        "fitID": fitID,
-        "fitURL": fit.url,
-        "shipName": fit.shipID.typeName,
-        "wheel": renders["wheel"],
-        "stats": renders["stats"]
-    }
-
-    return HttpResponse(json.dumps(response), mimetype="application/json")
-
-  # Invalid return type.
-  raise Http404
 
