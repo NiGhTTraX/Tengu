@@ -65,11 +65,13 @@ class Command(BaseCommand):
 
       make_option("--noImport",
           default = False,
+          action = "store_true",
           dest = "noImport",
           help = "Only generate the cache"),
 
       make_option("--noGenerate",
           default = False,
+          action = "store_true",
           dest = "noGenerate",
           help = "Don't generate the cache"),
   )
