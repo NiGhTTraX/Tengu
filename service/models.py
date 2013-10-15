@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 from service.utils import base_encode
 
 
@@ -26,13 +27,13 @@ class Fit(models.Model):
   visibility = models.IntegerField(choices = VISIBILITY_CHOICES,
                                    default = PRIVATE)
 
-  highSlot = models.CharField(max_length = 2000, null = True)
-  medSlot = models.CharField(max_length = 2000, null = True)
-  lowSlot = models.CharField(max_length = 2000, null = True)
-  rigSlot = models.CharField(max_length = 2000, null = True)
+  highs = models.CharField(max_length = 2000, null = True)
+  meds = models.CharField(max_length = 2000, null = True)
+  lows = models.CharField(max_length = 2000, null = True)
+  rigs = models.CharField(max_length = 2000, null = True)
   subsystems = models.CharField(max_length = 2000, null = True)
   drones = models.CharField(max_length = 2000, null = True)
-  boosters = models.CharField(max_length = 2000, null = True)
+  charges = models.CharField(max_length = 2000, null = True)
 
   created = models.DateTimeField(auto_now_add = True)
   modified = models.DateTimeField(auto_now = True)

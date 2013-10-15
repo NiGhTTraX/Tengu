@@ -29,6 +29,7 @@ def __getVisibilityQuery(request):
 
   return Q(sessionID = request.session.session_key) | Q(public=True)
 
+
 def searchShipsAndFits(request, name):
   """Searches for ships and fits.
 
@@ -57,6 +58,7 @@ def searchShipsAndFits(request, name):
 
   return render_to_response("ships.html", locals())
 
+
 def getFits(request, typeID):
   """Get fits by ship type ID.
 
@@ -79,6 +81,7 @@ def getFits(request, typeID):
   fits.extend([(1, fit.shipID, fit) for fit in Fit.objects.filter(q)])
 
   return render_to_response("ships.html", locals())
+
 
 def newFit(request, typeID):
   """Creates a new fit with the given ship.
@@ -107,14 +110,10 @@ def newFit(request, typeID):
 
   fit.save()
 
-  #renders = renderFit(request, fit)
-
   response = {
       "fitID": fit.pk,
       "fitURL": fit.url,
       "shipName": ship.typeName,
-      #"wheel": renders["wheel"],
-      #"stats": renders["stats"]
   }
 
   return HttpResponse(json.dumps(response), content_type="application/json")

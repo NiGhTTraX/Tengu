@@ -10,9 +10,6 @@ from ui.main.utils import getSlots
 from ui.market_tree.utils import getExpandedGroups
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
-from service.models import Fit
-from service.utils import base_decode
-from service.views.api import getFit
 
 from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
 
@@ -41,15 +38,6 @@ def home(request, fitURL = None):
   expandedGroups = getExpandedGroups(request)
   marketGroupsItems = MARKET_GROUPS_ITEMS
   marketGroupsShips = MARKET_GROUPS_SHIPS
-
-  # Are we viewing a fit?
-  if fitURL:
-    fitID = base_decode(fitURL)
-    fit = getFit(request, fitID)
-    if not fit:
-      raise Http404
-
-    #renders = renderFit(request, fit)
 
   """
   Some views require the session key. In order to get the key, a session must
