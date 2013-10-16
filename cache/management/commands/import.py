@@ -97,7 +97,7 @@ class Command(BaseCommand):
           self.importTable(os.path.join(options["dumpPath"], fileName), tableName,
           cursor)
 
-      if options["noImport"] and not options["noGenerate"]:
+      if not options["noGenerate"]:
         if options["dataHandler"] == "django":
           dataHandler = DjangoDataHandler()
         elif options["dataHandler"] == "json":
