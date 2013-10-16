@@ -4,6 +4,18 @@ from .base import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        'django.request': {
+            'level': 'ERROR',
+            'propagate': True,  # this will bubble up to the django logger
+                                # which will log the error to console
+        },
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
