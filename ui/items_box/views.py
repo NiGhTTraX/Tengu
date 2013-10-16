@@ -8,6 +8,7 @@ from ui.items_box.utils import getCPUandPGandSlot
 from inv.const import CATEGORIES_ITEMS
 
 import json
+import hashlib
 
 
 def getItems(request, marketGroupID):
@@ -44,7 +45,7 @@ def getItems(request, marketGroupID):
   return render_to_response("items.html", locals())
 
 
-def searchItems(request, typeName):
+def searchItems(request, keywords):
   """Searches for items by name.
 
   First, check whether the list is in cache, returning it directly if it is.
@@ -59,18 +60,19 @@ def searchItems(request, typeName):
   if not request.is_ajax():
     raise Http404
 
-  items = cache.get("search_%s" % typeName)
+  hashValue = hashlib.md5(keywords.encode()).hexdigest()
+  items = cache.get("search_%s" % hashValue)
 
   if items is None:
     # List wasn't in cache, let's fetch it from the database.
-    itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True,
+    itemQuery = Item.objects.filter(typeName__icontains=keywords, published=True,
         categoryID_id__in=CATEGORIES_ITEMS)
 
     # Augment with CPU, PG and slot info.
     items = getCPUandPGandSlot(itemQuery)
 
     # Now store it in cache.
-    cache.set("search_%s" % typeName, items)
+    cache.set("search_%s" % hashValue, items)
 
   return render_to_response("items.html", locals())
 
