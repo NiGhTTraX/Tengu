@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     #url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'ui.main.views.home'),
+    url(r'^fit/([0-9a-zA-z]+)/$', 'ui.main.views.home'),
 
     url(r'^updateLeftSidebarResizeHandler/$', 'ui.main.views.updateLeftSidebarResizeHandler'),
     url(r'^updateMarketTree/$', 'ui.market_tree.views.updateMarketTree'),

@@ -7,8 +7,11 @@ from django.contrib.sites.models import get_current_site
 from django.core.cache import cache
 
 from ui.market_tree.utils import getExpandedGroups
+from service.utils import base_decode
+from ui.wheel.views import renderFit
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
+from service.models import Fit
 
 from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
 
@@ -37,6 +40,15 @@ def home(request, fitURL = None):
   expandedGroups = getExpandedGroups(request)
   marketGroupsItems = MARKET_GROUPS_ITEMS
   marketGroupsShips = MARKET_GROUPS_SHIPS
+
+  if fitURL:
+    fitID = base_decode(fitURL)
+    try:
+      fit = Fit.objects.get(pk=fitID)
+    except Fit.DoesNotExist:
+      raise Http404
+
+    wheel = renderFit(fit)
 
   """
   Some views require the session key. In order to get the key, a session must

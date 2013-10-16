@@ -21,11 +21,8 @@
 
   {% if fit %}
   <div class="tab-content" id="fit{{ fit.pk }}">
-    {% if renders %}
-      {{ renders.wheel }}
-    {% else %}
-      {% include "fit.html" %}
-    {% endif %}
-    </div>
+    {{ wheel }}
+  </div>
   {% endif %}
 </div>
+

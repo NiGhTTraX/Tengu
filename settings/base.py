@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'raven',
     'ui.items_box',
     'ui.market_tree',
+    'ui.wheel',
     'ui.main',
     'service',
 )

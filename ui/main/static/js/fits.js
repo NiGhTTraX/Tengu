@@ -14,19 +14,8 @@ function loadFit(data, tab, fit, stats) {
 	fit.removeClass("vcw");
 	fit.html(data["wheel"]);
 
-	stats.attr("id", "stats" + fitID);
-	stats.removeClass("vcw");
-	stats.html(data["stats"]);
-
-	stats.sortable({
-			axis: "y",
-			containment: $("#right-sidebar"),
-			handle: "h1",
-			update: function(e ,ui) {
-				updateWidgets($(this));
-				syncPositions($(this), ui);
-			}
-	});
+	// Initialize the fitting wheel.
+	$(".fittingWheel", fit).wheel();
 
 	// Change the URL.
 	window.history.replaceState({"fitID": fitID}, "", "/fit/" + fitURL + "/");
@@ -59,17 +48,19 @@ function newTab() {
 	fit.addClass("tab-content vcw");
 
 	// Create a new stats list.
+	/*
 	$("#stats .tab-content").hide();
 	var stats = $("<div></div>").append(loaderContent.clone());
 	stats.addClass("tab-content vcw");
+	*/
 
 	tab.data("obj", $([fit, stats]));
 	$("#tabs-fits").append(tab);
 	$("#tabs-fits").sortable("refresh");
 	$("#fitting-window").append(fit);
-	$("#stats").append(stats);
+	//$("#stats").append(stats);
 
-	return {"tab": tab, "fit": fit, "stats": stats};
+	return {"tab": tab, "fit": fit};//, "stats": stats};
 }
 
 function newFit(id) {
@@ -79,7 +70,7 @@ function newFit(id) {
 		url: "/newFit/" + id + "/",
 		method: "POST",
 		dataType: "json",
-		success: function(data) { loadFit(data, r.tab, r.fit, r.stats); }
+		success: function(data) { loadFit(data, r.tab, r.fit);}//, r.stats); }
 	});
 }
 

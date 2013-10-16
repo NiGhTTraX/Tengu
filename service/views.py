@@ -4,6 +4,7 @@ from django.db.models import Q
 
 from service.models import Fit
 from inv.models import Item
+from ui.wheel.views import renderFit
 
 from inv.const import CATEGORIES_SHIPS
 
@@ -114,6 +115,7 @@ def newFit(request, typeID):
       "fitID": fit.pk,
       "fitURL": fit.url,
       "shipName": ship.typeName,
+      "render": renderFit(fit)
   }
 
   return HttpResponse(json.dumps(response), content_type="application/json")
