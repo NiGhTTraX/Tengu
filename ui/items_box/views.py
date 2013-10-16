@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.core.cache import cache
 
 from inv.models import MarketGroup, Item
-from ui.items_box.utils import getCPUandPG
+from ui.items_box.utils import getCPUandPGandSlot
 
 from inv.const import CATEGORIES_ITEMS
 
@@ -35,8 +35,8 @@ def getItems(request, marketGroupID):
 
     itemQuery = Item.objects.filter(marketGroupID = marketGroup,
                                     published=True).order_by("typeName")
-    # Augment with CPU and PG info.
-    items = getCPUandPG(itemQuery)
+    # Augment with CPU, PG and slot info.
+    items = getCPUandPGandSlot(itemQuery)
 
     # Store the list in cache.
     cache.set("items_%d" % marketGroupID, items)
@@ -66,8 +66,8 @@ def searchItems(request, typeName):
     itemQuery = Item.objects.filter(typeName__icontains=typeName, published=True,
         categoryID_id__in=CATEGORIES_ITEMS)
 
-    # Augment with CPU and PG info.
-    items = getCPUandPG(itemQuery)
+    # Augment with CPU, PG and slot info.
+    items = getCPUandPGandSlot(itemQuery)
 
     # Now store it in cache.
     cache.set("search_%s" % typeName, items)

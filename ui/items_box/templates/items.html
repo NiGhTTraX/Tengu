@@ -10,7 +10,7 @@
     <th><img src="{% static "images/2_64_7.png" %}" alt="PG" title="Powergrid" border="0" width="16" height="16"/></th>
   </tr>
 {% for item in items %}
-  <tr class="item" id="item{{ item.0.typeID }}">
+  <tr class="item {{ item.3 }}" id="item{{ item.0.typeID }}">
     <td class="icon">
       <img src="http://image.eveonline.com/Type/{{ item.0.typeID }}_32.png" alt="{{ item.0.typeName }}" title="{{ item.0.typeName }}" border="0" width="16" height="16"/>
     </td>
