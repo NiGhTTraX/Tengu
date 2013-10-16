@@ -6,7 +6,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.sites.models import get_current_site
 from django.core.cache import cache
 
-from ui.main.utils import getSlots
 from ui.market_tree.utils import getExpandedGroups
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item

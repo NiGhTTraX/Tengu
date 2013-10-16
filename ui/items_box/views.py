@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.core.cache import cache
 
 from inv.models import MarketGroup, Item
-from ui.main.utils import getCPUandPG
+from ui.items_box.utils import getCPUandPG
 
 from inv.const import CATEGORIES_ITEMS
 
