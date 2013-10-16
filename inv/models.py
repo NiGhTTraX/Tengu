@@ -93,6 +93,28 @@ class Item(models.Model):
   trackingSpeedAttributeID = models.IntegerField(null=True)
   fittableNonSingleton = models.NullBooleanField()
 
+  HIGH = 1
+  MED = 2
+  LOW = 3
+  RIG = 4
+  SUB = 5
+  SLOT_CHOICES = (
+      (HIGH, "High"),
+      (MED, "Medium"),
+      (LOW, "Low"),
+      (RIG, "Rig"),
+      (SUB, "Subsystem")
+  )
+  slot = models.IntegerField(choices = SLOT_CHOICES, null=True)
+
+  MISSILE = 1
+  TURRET = 2
+  HARDPOINT_CHOICES = (
+      (MISSILE, "Missle launcher"),
+      (TURRET, "Turret bay")
+  )
+  hardpoint = models.IntegerField(choices = HARDPOINT_CHOICES, null=True)
+
   def __str__(self):
     return self.typeName
 

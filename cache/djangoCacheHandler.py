@@ -7,6 +7,7 @@ from dogma.models import TypeAttributes, TypeEffects, EffectModifiers
 from dogma.models import Attribute as DjangoAttribute
 from dogma.models import Effect as DjangoEffect
 from dogma.models import Modifier as DjangoModifier
+from dogma.const import *
 from cache.models import Metadata
 
 from eos.data.cache.handler import CacheHandler
@@ -211,6 +212,25 @@ class DjangoCacheHandler(CacheHandler):
       item.falloffAttributeID = typeRow["falloffAttributeId"]
       item.trackingSpeedAttributeID = typeRow["trackingSpeedAttributeId"]
       item.fittableNonSingleton = typeRow["fittableNonSingleton"]
+
+      # Get the slot and hardpoint type.
+      e = typeRow["effects"]
+      if EFFECT_HIGH_SLOT in e:
+        item.slot = Item.HIGH
+      elif EFFECT_MED_SLOT in e:
+        item.slot = Item.MED
+      elif EFFECT_LOW_SLOT in e:
+        item.slot = Item.LOW
+      elif EFFECT_RIG_SLOT in e:
+        item.slot = Item.RIG
+      elif EFFECT_SUB_SLOT in e:
+        item.slot = item.SUB
+
+      if EFFECT_MISSILE_SLOT in e:
+        item.hardpoint = Item.MISSILE
+      elif EFFECT_TURRET_SLOT in e:
+        item.hardpoint = Item.TURRET
+
       item.save()
 
       # Add any new effects that were created by Eos.
