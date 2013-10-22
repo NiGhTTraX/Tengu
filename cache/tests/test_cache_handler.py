@@ -77,6 +77,7 @@ class TestNumQueries(TestCase):
 
   def setUp(self):
     self.cacheHandler = CACHE_HANDLER
+    self.dataHandler = DATA_HANDLER
 
     # Clear the cache before every test.
     cache.clear()
@@ -216,6 +217,15 @@ class TestNumQueries(TestCase):
     # Since the data is now in cache, no more queries will be issued.
     with self.assertNumQueries(0):
       self.cacheHandler.getFingerprint()
+
+  def test_data_version(self):
+    # Get the data version from the database.
+    with self.assertNumQueries(1):
+      self.dataHandler.getVersion()
+
+    # The data version is not stored in cache.
+    with self.assertNumQueries(1):
+      self.dataHandler.getVersion()
 
   def test_one_item_which_expires(self):
     self.cacheHandler.getType(TestItem.typeID)
