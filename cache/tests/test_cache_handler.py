@@ -143,7 +143,7 @@ class TestNumQueries(TestCase):
 
       There's 1 final query to update the fingerprint.
       """
-      EOS = Eos(dataHandler=DATA_HANDLER, cacheHandler=CACHE_HANDLER,
+      Eos(dataHandler=DATA_HANDLER, cacheHandler=CACHE_HANDLER,
           storagePath="/tmp/")
 
   def test_one_item(self):
