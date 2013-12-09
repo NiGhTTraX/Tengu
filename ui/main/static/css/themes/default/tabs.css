@@ -37,7 +37,7 @@
 .current-tab {
 	border-bottom: 1px solid #000 !important;
 	box-shadow: inset 0 6px 6px -6px #fff;
-	-webit-box-shadow: inset 0 6px 6px -6px #fff;
+	-webkit-box-shadow: inset 0 6px 6px -6px #fff;
 	-moz-box-shadow: inset 0 6px 6px -6px #fff;
 }
 
