@@ -3,10 +3,13 @@ html, body {
 	font-family: arial, sans-serif;
 	font-size: small;
 	color: #666;
+	background-color: #010101;
 }
 
 #container {
-	background-color: #010101;
+	min-width: 1366px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .eve-box {

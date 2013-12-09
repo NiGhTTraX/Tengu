@@ -6,7 +6,7 @@ var rightSidebarPaddingX, rightSidebarPaddingY;
 var handleHight;
 var headerHeight, footerHeight;
 var oldWindowHeight, oldWindowWidth;
-var windowHeight, windowWidth;
+var containerHeight, containerWidth;
 var containment = [0, 0, 0, 0];
 var resizeHandleTopLimit;
 
@@ -31,16 +31,16 @@ function calculateContainment() {
 
 function adjustResizeHandle() {
 	/**
-	* Adjust the resize handle's position when the window's height changes.
+	* Adjust the resize handle's position when the container's height changes.
 	*/
 	var top = resizeHandle.position().top;
 	var oldTop = top;
 
-	var direction = oldWindowHeight < windowHeight ? -1 : 1;
+	var direction = oldWindowHeight < containerHeight ? -1 : 1;
 	var distance = Math.floor(
-			Math.abs(oldWindowHeight - windowHeight) / 2) * direction;
+			Math.abs(oldWindowHeight - containerHeight) / 2) * direction;
 
-	// Adjust the resize handler, only if the window has changed.
+	// Adjust the resize handler, only if the container has changed.
 	if (distance) {
 		// Don't move the handler below the containment.
 		if (top - distance >= resizeHandleTopLimit)
@@ -50,7 +50,7 @@ function adjustResizeHandle() {
 
 		/**
 		* There shouldn't be any case in which the handler would go over the bottom
-		* limit because it only moves 1/2 of the window difference, so the window
+		* limit because it only moves 1/2 of the container difference, so the container
 		* will advance faster than it. Thus, no need to check for the bottom limit.
 		*/
 	}
@@ -88,32 +88,32 @@ function adjustLeftSidebar() {
 
 function adjustColumns() {
 	/**
-	* Resizes the 3 columns so they fill the entire window.
+	* Resizes the 3 columns so they fill the entire container.
 	*/
-	leftSidebar.height(windowHeight - headerHeight - footerHeight -
+	leftSidebar.height(containerHeight - headerHeight - footerHeight -
 			leftSidebarPaddingY);
-	rightSidebar.height(windowHeight - headerHeight - footerHeight -
+	rightSidebar.height(containerHeight - headerHeight - footerHeight -
 			rightSidebarPaddingY);
 
-	content.width(windowWidth - leftSidebarWidth - rightSidebarWidth -
+	content.width(containerWidth - leftSidebarWidth - rightSidebarWidth -
 			contentPaddingX);
-	content.height(windowHeight - headerHeight - footerHeight -
+	content.height(containerHeight - headerHeight - footerHeight -
 			contentPaddingY);
 }
 
 function adjustLayout() {
-	// Get the new window's dimmensions.
-	windowWidth = $(window).width();
-	windowHeight = $(window).height();
+	// Get the new container's dimmensions.
+	containerWidth = $("#container").width();
+	containerHeight = $("#container").height();
 
 	// Adjust layout.
 	adjustColumns();
 	calculateContainment();
 	adjustResizeHandle();
 
-	// Store the window's dimmensions.
-	oldWindowWidth = windowWidth;
-	oldWindowHeight = windowHeight;
+	// Store the container's dimmensions.
+	oldWindowWidth = containerWidth;
+	oldWindowHeight = containerHeight;
 }
 
 
@@ -142,8 +142,8 @@ $(document).ready(function() {
 	var search = $("#search");
 	resizeHandleTopLimit = search.position().top + search.outerHeight(true);
 
-	oldWindowHeight = windowHeight = $(window).height();
-	oldWindowWidth = windowWidth = $(window).width();
+	oldWindowHeight = containerHeight = $(container).height();
+	oldWindowWidth = containerWidth = $(container).width();
 
 	adjustColumns();
 	calculateContainment();
