@@ -109,22 +109,26 @@ a:active {
 
 /* Up button */
 ::-webkit-scrollbar-button:vertical:start {
-	background: url("images/38_16_105.png");
+	width: 11px; height: 12px;
+	background: url("images/38_16_105.png") no-repeat;
 }
 
 /* Down button */
 ::-webkit-scrollbar-button:vertical:end {
-	background: url("images/38_16_104.png");
+	width: 11px; height: 12px;
+	background: url("images/38_16_104.png") no-repeat;
 }
 
 /* Left button */
 ::-webkit-scrollbar-button:horizontal:start {
-	background: url("images/38_16_106.png");
+	width: 11px; height: 12px;
+	background: url("images/38_16_106.png") no-repeat;
 }
 
 /* Right button */
 ::-webkit-scrollbar-button:horizontal:end {
-	background: url("images/38_16_107.png");
+	width: 11px; height: 12px;
+	background: url("images/38_16_107.png") no-repeat;
 }
 
 /* Corner */
