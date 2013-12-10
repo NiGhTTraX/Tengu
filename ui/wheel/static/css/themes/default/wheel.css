@@ -1,0 +1,341 @@
+.fittingWheel {
+	position: relative;
+	width: 512px;
+	height: 512px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fittingWheel .bg {
+	position: absolute;
+	top: 65px;
+	left: 65px;
+	width: 382px;
+	height: 382px;
+	overflow: hidden;
+}
+
+.fittingWheel .bg img {
+	width: 382px;
+	height: 382px;
+	-moz-border-radius: 150px;
+	-webkit-border-radius: 150px;
+	border-radius: 150px;
+}
+
+.fittingWheel .wheel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url("images/fits/wheel.png") no-repeat;
+	background-size: 512px 512px;
+	width: 512px;
+	height: 512px;
+}
+
+.fittingWheel .slots {
+	z-index: 0;
+	position: absolute;
+	background-repeat: no-repeat;
+}
+
+.fittingWheel .slots .overlay {
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.fittingWheel .slots .statsbar {
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+}
+
+/* High slots */
+.slots.highs {
+	left:109px;
+	top:22px;
+	width:290px;
+	height:82px;
+}
+
+.slots.meds {
+	left:404px;
+	top:109px;
+	width:82px;
+	height:290px;
+}
+
+.slots.lows {
+	right:113px;
+	top:404px;
+	width:290px;
+	height:82px;
+}
+
+.slots.rigs {
+	left:29px;
+	bottom:301px;
+	width:80px;
+	height:109px;
+}
+
+.slots.subs {
+	left:22px;
+	top:222px;
+	width:85px;
+	height:180px;
+}
+
+.slots.turrets {
+	left:96px;
+	top:14px;
+	width:99px;
+	height:60px;
+}
+
+.slots.missiles {
+	left:314px;
+	top:14px;
+	width:97px;
+	height:60px;
+}
+
+/* Bars */
+.slots.calibration {
+	left:13px;
+	top:92px;
+	width:64px;
+	height:109px;
+}
+
+.slots.calibration .overlay {
+	background: url("images/fits/calibration.png") no-repeat;
+}
+
+.slots.cpu {
+	left:424px;
+	top:256px;
+	width:81px;
+	height:178px;
+}
+
+.slots.cpu .overlay {
+	background: url("images/fits/cpu.png") no-repeat;
+}
+
+.slots.pg {
+	left:255px;
+	top:424px;
+	width:179px;
+	height:81px;
+}
+
+.slots.pg .overlay {
+	background: url("images/fits/pg.png") no-repeat;
+}
+
+.slots.highs.h8 {
+	background: url("images/fits/highs8.png") no-repeat;
+}
+
+.slots.highs.h7 {
+	background: url("images/fits/highs7.png") no-repeat;
+}
+
+.slots.highs.h6 {
+	background: url("images/fits/highs6.png") no-repeat;
+}
+
+.slots.highs.h5 {
+	background: url("images/fits/highs5.png") no-repeat;
+}
+
+.slots.highs.h4 {
+	background: url("images/fits/highs4.png") no-repeat;
+}
+
+.slots.highs.h3 {
+	background: url("images/fits/highs3.png") no-repeat;
+}
+
+.slots.highs.h2 {
+	background: url("images/fits/highs2.png") no-repeat;
+}
+
+.slots.highs.h1 {
+	background: url("images/fits/highs1.png") no-repeat;
+}
+
+/* Med slots */
+.slots.meds.m8 {
+	background: url("images/fits/meds8.png") no-repeat;
+}
+
+.slots.meds.m7 {
+	background: url("images/fits/meds7.png") no-repeat;
+}
+
+.slots.meds.m6 {
+	background: url("images/fits/meds6.png") no-repeat;
+}
+
+.slots.meds.m5 {
+	background: url("images/fits/meds5.png") no-repeat;
+}
+
+.slots.meds.m4 {
+	background: url("images/fits/meds4.png") no-repeat;
+}
+
+.slots.meds.m3 {
+	background: url("images/fits/meds3.png") no-repeat;
+}
+
+.slots.meds.m2 {
+	background: url("images/fits/meds2.png") no-repeat;
+}
+
+.slots.meds.m1 {
+	background: url("images/fits/meds1.png") no-repeat;
+}
+
+/* Low slots */
+.slots.lows.l8 {
+	background: url("images/fits/lows8.png") no-repeat right;
+}
+
+.slots.lows.l7 {
+	background: url("images/fits/lows7.png") no-repeat right;
+}
+
+.slots.lows.l6 {
+	background: url("images/fits/lows6.png") no-repeat right;
+}
+
+.slots.lows.l5 {
+	background: url("images/fits/lows5.png") no-repeat right;
+}
+
+.slots.lows.l4 {
+	background: url("images/fits/lows4.png") no-repeat right;
+}
+
+.slots.lows.l3 {
+	background: url("images/fits/lows3.png") no-repeat right;
+}
+
+.slots.lows.l2 {
+	background: url("images/fits/lows2.png") no-repeat right;
+}
+
+.slots.lows.l1 {
+	background: url("images/fits/lows1.png") no-repeat right;
+}
+
+/* Rig slots */
+.slots.rigs.r3 {
+	background: url("images/fits/rigs3.png") no-repeat left bottom;
+}
+
+.slots.rigs.r2 {
+	background: url("images/fits/rigs2.png") no-repeat left bottom;
+}
+
+.slots.rigs.r1 {
+	background: url("images/fits/rigs1.png") no-repeat left bottom;
+}
+
+/* Sub slots */
+.slots.subs.s5 {
+	background: url("images/fits/subs5.png") no-repeat;
+}
+
+/* Missile slots */
+.slots.mh8 .overlay {
+	background: url("images/fits/missiles8.png") no-repeat;
+}
+
+.slots.mh7 .overlay {
+	background: url("images/fits/missiles7.png") no-repeat;
+}
+
+.slots.mh6 .overlay {
+	background: url("images/fits/missiles6.png") no-repeat;
+}
+
+.slots.mh5 .overlay {
+	background: url("images/fits/missiles5.png") no-repeat;
+}
+
+.slots.mh4 .overlay {
+	background: url("images/fits/missiles4.png") no-repeat;
+}
+
+.slots.mh3 .overlay {
+	background: url("images/fits/missiles3.png") no-repeat;
+}
+
+.slots.mh2 .overlay {
+	background: url("images/fits/missiles2.png") no-repeat;
+}
+
+.slots.mh1 .overlay {
+	background: url("images/fits/missiles1.png") no-repeat;
+}
+
+/* Turret slots */
+.slots.th8 .overlay {
+	background: url("images/fits/turrets8.png") no-repeat;
+}
+
+.slots.th7 .overlay {
+	background: url("images/fits/turrets7.png") no-repeat;
+}
+
+.slots.th6 .overlay {
+	background: url("images/fits/turrets6.png") no-repeat;
+}
+
+.slots.th5 .overlay {
+	background: url("images/fits/turrets5.png") no-repeat;
+}
+
+.slots.th4 .overlay {
+	background: url("images/fits/turrets4.png") no-repeat;
+}
+
+.slots.th3 .overlay {
+	background: url("images/fits/turrets3.png") no-repeat;
+}
+
+.slots.th2 .overlay {
+	background: url("images/fits/turrets2.png") no-repeat;
+}
+
+.slots.th1 .overlay {
+	background: url("images/fits/turrets1.png") no-repeat;
+}
+
+.wavy-slot {
+	-webkit-user-select: none;
+	user-select: none;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #FFF;
+	background-color: #ccc;
+	z-index: 99;
+}
+
+.placeholder {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #FFF;
+	background-color: #999;
+}
+

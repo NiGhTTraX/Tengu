@@ -12,7 +12,7 @@ function loadFit(data, tab, fit, stats) {
 
 	fit.attr("id", "fit" + fitID);
 	fit.removeClass("vcw");
-	fit.html(data["wheel"]);
+	fit.html(data["render"]);
 
 	// Initialize the fitting wheel.
 	$(".fittingWheel", fit).wheel();
