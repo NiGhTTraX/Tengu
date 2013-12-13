@@ -120,3 +120,20 @@ def newFit(request, typeID):
 
   return HttpResponse(json.dumps(response), content_type="application/json")
 
+def getFit(request, fitID):
+  try:
+    fit = Fit.objects.get(pk=fitID)
+  except Fit.DoesNotExist:
+    return None
+
+  # Anyone can view public fits.
+  if fit.public:
+    return fit
+
+  if request.user.pk:
+    # A user can view his own fits.
+    if fit.userID.pk == request.user.pk:
+      return fit
+  elif request.session.session_key == fit.sessionID:
+    return fit
+

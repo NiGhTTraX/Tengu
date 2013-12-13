@@ -7,11 +7,12 @@ from django.contrib.sites.models import get_current_site
 from django.core.cache import cache
 
 from ui.market_tree.utils import getExpandedGroups
-from service.utils import base_decode
 from ui.wheel.views import renderFit
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
+from service.utils import base_decode
 from service.models import Fit
+from service.views import getFit
 
 from inv.const import MARKET_GROUPS_ITEMS, MARKET_GROUPS_SHIPS
 
@@ -43,9 +44,8 @@ def home(request, fitURL = None):
 
   if fitURL:
     fitID = base_decode(fitURL)
-    try:
-      fit = Fit.objects.get(pk=fitID)
-    except Fit.DoesNotExist:
+    fit = getFit(request, fitID)
+    if fit is None:
       raise Http404
 
     wheel = renderFit(fit)
