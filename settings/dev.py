@@ -7,11 +7,26 @@ TEMPLATE_DEBUG = DEBUG
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console':{
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
     'loggers': {
         'django.request': {
-            'level': 'ERROR',
-            'propagate': True,  # this will bubble up to the django logger
-                                # which will log the error to console
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True
         },
     }
 }
