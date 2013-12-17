@@ -14,7 +14,9 @@ class disableSynchronous():
       cls.previous = cursor.execute("PRAGMA synchronous;").fetchone()
       cursor.execute("PRAGMA synchronous = OFF;")
 
-    return cls.previous
+      return cls.previous
+
+    return None
 
   @classmethod
   def restore(cls):

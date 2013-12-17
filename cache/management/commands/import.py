@@ -12,6 +12,7 @@ from inv.models import *
 from dogma.models import *
 from cache.models import *
 
+import sqlite3
 import json
 import sys
 import os
