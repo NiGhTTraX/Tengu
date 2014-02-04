@@ -1,12 +1,10 @@
 function adjustResizeHandle(data) {
 	var resizeHandle = $("#resize-handle"),
-			handleHeight = resizeHandle.outerHeight(true),
 			top = resizeHandle.position().top,
 			oldTop = top,
 			direction = data.oldWindow.height < data.window.height ? 1 : -1,
 			distance = Math.floor(
-					Math.abs(data.oldWindow.height - data.window.height) / 2) * direction,
-			updateTimeout;
+					Math.abs(data.oldWindow.height - data.window.height) / 2) * direction;
 
 	// Adjust the resize handler, only if the container height has changed.
 	if (distance) {
@@ -25,12 +23,9 @@ function adjustResizeHandle(data) {
 
 	// Update the position and adjust the left sidebar.
 	if (oldTop !== top) {
-		clearTimeout(updateTimeout);
-		updateTimeout = setTimeout(function() {
-			updateResizeHandle();
-		}, 100);
 		resizeHandle.css("top", top);
 
+		updateResizeHandle();
 		resizeLeftSidebar();
 	}
 }
@@ -44,16 +39,22 @@ function resizeLeftSidebar() {
 	$("#items-box").css("top", top + handleHeight);
 }
 
+var updateResizeHandleTimeout;
+var UPDATE_RESIZE_HANDLE_DELAY = 1000;
+
 function updateResizeHandle() {
 	/**
 	* Store the resize handle position in a cookie.
 	*/
-	var top = $("#resize-handle").position().top;
+	clearTimeout(updateResizeHandleTimeout);
+	updateResizeHandleTimeout = setTimeout(function() {
+		var top = $("#resize-handle").position().top;
 
-	$.cookie("leftSidebarResizeHandle", top, {
-			expires: COOKIE_EXPIRE,
-			path: "/"
-	});
+		$.cookie("leftSidebarResizeHandle", top, {
+				expires: COOKIE_EXPIRE,
+				path: "/"
+		});
+	}, UPDATE_RESIZE_HANDLE_DELAY);
 }
 
 $(document).ready(function() {
