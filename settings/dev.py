@@ -46,14 +46,6 @@ CACHES = {
     }
 }
 
-# Add django-jenkins
-INSTALLED_APPS += (
-    'django_jenkins',
-)
-JENKINS_TASKS = (
-    'selenose.tasks.selenium_driver',
-)
-
 # Django Compressor settings.
 COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
 COMPRESS_YUI_BINARY = 'java -jar /home/nightcrawler/Downloads/yuicompressor-2.4.8.jar'
