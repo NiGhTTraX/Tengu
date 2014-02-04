@@ -14,3 +14,7 @@
 
 # Jenkins
 /reports
+
+# Django compressor
+csstidy
+yuicompressor.jar

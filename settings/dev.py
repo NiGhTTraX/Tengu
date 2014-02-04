@@ -1,4 +1,5 @@
 from .base import *
+import os
 
 
 DEBUG = True
@@ -47,6 +48,6 @@ CACHES = {
 }
 
 # Django Compressor settings.
-COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
-COMPRESS_YUI_BINARY = 'java -jar /home/nightcrawler/Downloads/yuicompressor-2.4.8.jar'
+COMPRESS_CSSTIDY_BINARY = os.path.join(BASE_DIR, 'csstidy')
+COMPRESS_YUI_BINARY = 'java -jar %s' % os.path.join(BASE_DIR, 'yuicompressor.jar')
 
