@@ -1,9 +1,28 @@
-<div id="left-sidebar-top">
-  {% include "market_header.html" %}
+{% load getMarketTree %}
+
+<div class="tabs">
+  <ul id="market-tabs" data-id="#market-tree">
+    <li id="tab-items" data-id="#market-items">Items</li>
+    <li id="tab-ships" class="current-tab" data-id="#market-ships">Ships</li>
+  </ul>
 </div>
 
-<div id="resize-handle" class="draggable ui-widget-content">&nbsp;</div>
+<div id="search">
+  <input id="search-items" type="text" value="Search term"/>
+  <div class="loading" style="display: none">&nbsp;</div>
+</div>
 
-<div id="left-sidebar-bottom">
+<div id="containment">
+  <div id="market-tree" class="eve-box">
+    <div id="market-items" class="tab-content" style="display:none">
+      {% getMarketTree marketGroupsItems expandedGroups %}
+    </div>
+    <div id="market-ships" class="tab-content">
+      {% getMarketTree marketGroupsShips expandedGroups True %}
+    </div>
+  </div>
+
+  <div id="resize-handle" class="draggable ui-widget-content">&nbsp;</div>
+
   <div id="items-box" class="eve-box">&nbsp;</div>
 </div>

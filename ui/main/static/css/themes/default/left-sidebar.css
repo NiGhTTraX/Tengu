@@ -5,6 +5,10 @@
 	height: 8px !important;
 }
 
-#left-sidebar-bottom {
-	margin-top: 8px;
+#containment {
+	position: absolute;
+	top: 50px;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }

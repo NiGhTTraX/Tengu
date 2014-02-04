@@ -6,6 +6,8 @@ function csrfSafeMethod(method) {
 	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+var COOKIE_EXPIRE = 3600 * 24 * 30;
+
 $.ajaxSetup({
 	crossDomain: false,
 	beforeSend: function(xhr, settings) {

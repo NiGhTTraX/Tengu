@@ -1,3 +1,13 @@
+#items-box {
+	position: absolute;
+	height: auto;
+	bottom: 0;
+	top: 50%;
+	left: 0;
+	right: 0;
+	margin-top: 8px;
+}
+
 .items-list {
 	min-width: 100%;
 	text-align: left;
@@ -40,14 +50,5 @@
 
 .item td.pg {
 	padding-right: 3px;
-}
-
-#items-box {
-	position: absolute;
-	height: auto;
-	bottom: 0;
-	top: 0;
-	left: 0;
-	right: 0;
 }
 
