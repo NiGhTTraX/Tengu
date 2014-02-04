@@ -39,8 +39,6 @@ INSTALLED_APPS = (
     'dogma',
     'inv',
     'cache',
-    'eos',
-    'raven',
     'ui.items_box',
     'ui.market_tree',
     'ui.wheel',
