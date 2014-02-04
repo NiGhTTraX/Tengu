@@ -1,14 +1,10 @@
-from selenose.cases import LiveServerTestCase
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from utils.test import SeleniumTestCase
 
 from inv.models import Item, MarketGroup
 from inv.const import MARKET_GROUP_SHIPS, CATEGORIES_SHIPS
 
 
-class TestMarketHeader(LiveServerTestCase):
+class TestMarketHeader(SeleniumTestCase):
 
   def setUp(self):
     # Create some items and groups.
@@ -63,8 +59,9 @@ class TestMarketHeader(LiveServerTestCase):
     self.mg1.click()
     self.mg2.click()
     self.sh1.click()
-    WebDriverWait(self.driver, 1).until(EC.presence_of_element_located(
-        (By.ID, "fits")), "Load fits timed out")
+    self.waitFor("fits", "Load fits timed out")
+    #WebDriverWait(self.driver, 1).until(EC.presence_of_element_located(
+    #    (By.ID, "fits")), "Load fits timed out")
     content = self.items_box.text.strip()
     self.assertTrue(content)
 
@@ -82,7 +79,8 @@ class TestMarketHeader(LiveServerTestCase):
 
   def test_search(self):
     self.search_box.send_keys("item")
-    WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(
-        (By.ID, "fits")), "Search timed out")
+    self.waitFor("fits", "Search timed out")
+    #WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(
+    #    (By.ID, "fits")), "Search timed out")
     self.assertTrue("item1" in self.items_box.text)
 
