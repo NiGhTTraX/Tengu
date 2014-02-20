@@ -1,5 +1,4 @@
 var searchTimer;
-var SEARCH_DELAY = 280; // Average time between keystrokes
 var oldItems = "";
 var searchResults = "";
 
@@ -61,7 +60,7 @@ $(document).ready(function() {
 
 	$("#search-items").bind("input", function() {
 		clearTimeout(searchTimer);
-		searchTimer = setTimeout(searchItems, SEARCH_DELAY);
+		searchTimer = setTimeout(searchItems, KEY_DELAY);
 	});
 });
 

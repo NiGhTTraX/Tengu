@@ -20,3 +20,4 @@ $.ajaxSetup({
 // Set the jQuery cookie plugin to save content in JSON format.
 $.cookie.json = true;
 
+var KEY_DELAY = 280; // Average time between keystrokes.
