@@ -41,20 +41,11 @@ $(document).ready(function() {
 		$("#items-box").html(oldItems);
 		oldItems = old;
 
-		$("#search-items").val("Search term");
-	});
-
-	$("#search-items").focus(function() {
-		if ($(this).val() == "Search term")
-			$(this).val("");
-	}).blur(function() {
-		if ($(this).val() == "")
-			$(this).val("Search term");
 	});
 
 	// When re-focusing on the search box, display the previous seach results.
 	$("#search-items").focus(function() {
-		if ($(this).val() != "" && $(this).val() != "Search term")
+		if ($(this).val() != "")
 			$("#items-box").html(searchResults);
 	});
 
