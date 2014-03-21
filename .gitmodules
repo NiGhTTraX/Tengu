@@ -1,6 +1,0 @@
-[submodule "raven"]
-	path = raven
-	url = git@github.com:NiGhTTraX/Raven.git
-[submodule "eos"]
-	path = eos
-	url = https://github.com/DarkFenX/Eos.git
