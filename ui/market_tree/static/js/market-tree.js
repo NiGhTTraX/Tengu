@@ -10,7 +10,7 @@ function updateMarketTree() {
 		expandedGroups.push(id);
 	});
 
-	$.cookie(EXPANDED_GROUPS_COOKIE, expandedGroups);
+	$.cookie(EXPANDED_GROUPS_COOKIE, expandedGroups, COOKIE_EXPIRE);
 }
 
 function toggleMarketGroup(group) {
