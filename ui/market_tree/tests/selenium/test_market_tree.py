@@ -1,14 +1,10 @@
-from selenose.cases import LiveServerTestCase
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from utils.test import SeleniumTestCase
 
 from inv.models import Item, MarketGroup
 from inv.const import MARKET_GROUP_SHIPS, CATEGORIES_SHIPS
 
 
-class TestMarketTree(LiveServerTestCase):
+class TestMarketTree(SeleniumTestCase):
 
   def setUp(self):
     # Create some items and groups.
@@ -44,27 +40,27 @@ class TestMarketTree(LiveServerTestCase):
     # Expand a market group.
     self.mg1.click()
 
-    # The child group self.should now be visible.
+    # The child group should now be visible.
     self.assertTrue(self.mg2.is_displayed())
     self.assertFalse(self.sh1.is_displayed())
 
     # Expand the child group.
     self.mg2.click()
 
-    # Items self.should now be visible.
+    # Items should now be visible.
     self.assertTrue(self.sh1.is_displayed())
 
     # Collapse the root group.
     self.mg1.click()
 
-    # Everything else self.should now be hidden.
+    # Everything else should now be hidden.
     self.assertFalse(self.mg2.is_displayed())
     self.assertFalse(self.sh1.is_displayed())
 
     # Expand the parent group again.
     self.mg1.click()
 
-    # Child group self.should remain collapsed.
+    # Child group should remain collapsed.
     self.assertTrue(self.mg2.is_displayed())
     self.assertFalse(self.sh1.is_displayed())
 
@@ -72,26 +68,26 @@ class TestMarketTree(LiveServerTestCase):
     # Expand the root group.
     self.mg1.click()
 
-    # Refreself.sh the page.
+    # Refresh the page.
     self.driver.refresh()
     self.mg1 = self.driver.find_element_by_id("mg1")
     self.mg2 = self.driver.find_element_by_id("mg2")
     self.sh1 = self.driver.find_element_by_id("sh1")
 
-    # Tree self.should be persistent.
+    # Tree should be persistent.
     self.assertTrue(self.mg2.is_displayed())
     self.assertFalse(self.sh1.is_displayed())
 
     # Expand the child group.
     self.mg2.click()
 
-    # Refreself.sh the page
+    # Refresh the page
     self.driver.refresh()
     self.mg1 = self.driver.find_element_by_id("mg1")
     self.mg2 = self.driver.find_element_by_id("mg2")
     self.sh1 = self.driver.find_element_by_id("sh1")
 
-    # Tree self.should be persistent.
+    # Tree should be persistent.
     self.assertTrue(self.mg2.is_displayed())
     self.assertTrue(self.sh1.is_displayed())
 

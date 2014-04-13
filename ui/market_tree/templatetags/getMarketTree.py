@@ -11,7 +11,7 @@ register = template.Library()
 
 
 @register.inclusion_tag("market_tree.html")
-def getMarketTree(marketGroupsToGet, expandedGroups, includeItems = False):
+def getMarketTree(marketGroupsToGet, includeItems = False):
   """Gets the market tree structure and status.
 
   First, check if the tree is in cache. If so, return it directly. Otherwise,
@@ -43,7 +43,6 @@ def getMarketTree(marketGroupsToGet, expandedGroups, includeItems = False):
 
   return {
       "marketTree": marketTree,
-      "expandedGroups": expandedGroups,
       "constants": {
           "INCREASE_INDENT": MarketTree.INCREASE_INDENT,
           "DECREASE_INDENT": MarketTree.DECREASE_INDENT,

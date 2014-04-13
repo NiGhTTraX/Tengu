@@ -1,4 +1,7 @@
+EXPANDED_GROUPS_COOKIE = "expanded_groups";
+
 var itemsCache = {};
+
 
 function updateMarketTree() {
 	var expandedGroups = [];
@@ -7,33 +10,41 @@ function updateMarketTree() {
 		expandedGroups.push(id);
 	});
 
-	$.ajax({
-			url: "/updateMarketTree/",
-			method: "POST",
-			data: {"expandedGroups": expandedGroups}
-	});
+	$.cookie(EXPANDED_GROUPS_COOKIE, expandedGroups, COOKIE_EXPIRE);
+}
+
+function toggleMarketGroup(group) {
+	var nextMarketGroup = $(group).next(".market-group");
+	var marketTree = $("#market-tree");
+	nextMarketGroup.toggle();
+	$(".toggle", group).toggleClass("expand collapse");
+
+	// If we expanded the group, let's see if we need to scroll to it. We only
+	// need to do it in case the group is taller than the container.
+	if (nextMarketGroup.is(":visible")) {
+		var top = $(group).offset().top - marketTree.offset().top;
+		var height = top + nextMarketGroup.outerHeight() + $(group).outerHeight();
+		if (height > marketTree.height())
+			marketTree.scrollTop(marketTree.scrollTop() + top);
+	} else {
+		// We collapsed this group, so let's collapse all subgroups.
+		$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
+		$(".market-group", nextMarketGroup).hide();
+	}
 }
 
 $(document).ready(function() {
+	// Let's expand the groups, if necessary.
+	var expandedGroups = $.cookie(EXPANDED_GROUPS_COOKIE);
+	if (expandedGroups) {
+		$.each(expandedGroups, function() {
+			var group = $("#mg" + this);
+			toggleMarketGroup(group);
+		});
+	}
+
 	$(".market-group-name.expandable").click(function() {
-		var nextMarketGroup = $(this).next(".market-group");
-		var marketTree = $("#market-tree");
-		nextMarketGroup.toggle();
-		$(".toggle", this).toggleClass("expand collapse");
-
-		// If we expanded the group, let's see if we need to scroll to it. We only
-		// need to do this in case the group is taller than the container.
-		if (nextMarketGroup.is(":visible")) {
-			var top = $(this).offset().top - marketTree.offset().top;
-			var height = top + nextMarketGroup.outerHeight() + $(this).outerHeight();
-			if (height > marketTree.height())
-				marketTree.scrollTop(marketTree.scrollTop() + top);
-		} else {
-			// We collapsed this group, so let's collapse all subgroups.
-			$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
-			$(".market-group", nextMarketGroup).hide();
-		}
-
+		toggleMarketGroup(this);
 		updateMarketTree();
 	});
 

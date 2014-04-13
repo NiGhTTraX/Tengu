@@ -59,13 +59,3 @@ class MarketTree(object):
 
     return result
 
-
-def getExpandedGroups(request):
-  # Now get which ones should be expanded.
-  expandedGroups = []
-  if "expandedMarketGroups" in request.COOKIES:
-    cookie = json.loads(request.COOKIES["expandedMarketGroups"])
-    expandedGroups = [int(x) for x in cookie]
-
-  return expandedGroups
-

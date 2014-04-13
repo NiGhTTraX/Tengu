@@ -6,7 +6,6 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.sites.models import get_current_site
 from django.core.cache import cache
 
-from ui.market_tree.utils import getExpandedGroups
 from ui.wheel.views import renderFit
 from dogma.models import TypeAttributes
 from inv.models import MarketGroup, Item
@@ -38,7 +37,6 @@ def home(request, fitURL = None):
   # Get the left sidebar resize handler.
   resizeHandlerTop = __getResizeHandler(request)
 
-  expandedGroups = getExpandedGroups(request)
   marketGroupsItems = MARKET_GROUPS_ITEMS
   marketGroupsShips = MARKET_GROUPS_SHIPS
 
