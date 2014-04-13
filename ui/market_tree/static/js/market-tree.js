@@ -27,7 +27,7 @@ function toggleMarketGroup(group) {
 		if (height > marketTree.height())
 			marketTree.scrollTop(marketTree.scrollTop() + top);
 	} else {
-		// We expanded this group, so let's collapse all subgroups.
+		// We collapsed this group, so let's collapse all subgroups.
 		$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
 		$(".market-group", nextMarketGroup).hide();
 	}
