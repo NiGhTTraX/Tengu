@@ -15,7 +15,6 @@ urlpatterns = patterns('',
     url(r'^fit/([0-9a-zA-z]+)/$', 'ui.main.views.home'),
 
     url(r'^updateLeftSidebarResizeHandler/$', 'ui.main.views.updateLeftSidebarResizeHandler'),
-    url(r'^updateMarketTree/$', 'ui.market_tree.views.updateMarketTree'),
     url(r'^getItems/(\d+)/$', 'ui.items_box.views.getItems'),
     url(r'^searchItems/(.+)/$', 'ui.items_box.views.searchItems'),
 
