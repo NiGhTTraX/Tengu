@@ -1,39 +1,22 @@
 EXPANDED_GROUPS_COOKIE = "expanded_groups";
+GET_MARKET_BROWSER_URL = "/getMarketBrowser/";
 
 var itemsCache = {};
 
 
-function updateMarketTree() {
-	var expandedGroups = [];
-	$(".market-group-name.expandable .toggle.collapse").each(function() {
-		var id = parseInt($(this).parent().attr("id").substr(2));
-		expandedGroups.push(id);
-	});
-
-	$.cookie(EXPANDED_GROUPS_COOKIE, expandedGroups, COOKIE_EXPIRE);
-}
-
-function toggleMarketGroup(group) {
-	var nextMarketGroup = $(group).next(".market-group");
-	var marketTree = $("#market-tree");
-	nextMarketGroup.toggle();
-	$(".toggle", group).toggleClass("expand collapse");
-
-	// If we expanded the group, let's see if we need to scroll to it. We only
-	// need to do it in case the group is taller than the container.
-	if (nextMarketGroup.is(":visible")) {
-		var top = $(group).offset().top - marketTree.offset().top;
-		var height = top + nextMarketGroup.outerHeight() + $(group).outerHeight();
-		if (height > marketTree.height())
-			marketTree.scrollTop(marketTree.scrollTop() + top);
-	} else {
-		// We collapsed this group, so let's collapse all subgroups.
-		$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
-		$(".market-group", nextMarketGroup).hide();
-	}
-}
-
 $(document).ready(function() {
+	// Fetch the market browser, display it and add the handlers.
+	$.ajax({
+		url: GET_MARKET_BROWSER_URL,
+		method: "GET",
+		success: function(data) {
+			$("#market-browser").html(data);
+			initMarketBrowser();
+		}
+	});
+});
+
+function initMarketBrowser() {
 	// Let's expand the groups, if necessary.
 	var expandedGroups = $.cookie(EXPANDED_GROUPS_COOKIE);
 	if (expandedGroups) {
@@ -83,5 +66,35 @@ $(document).ready(function() {
 			});
 		}
 	});
-});
+}
+
+function updateMarketTree() {
+	var expandedGroups = [];
+	$(".market-group-name.expandable .toggle.collapse").each(function() {
+		var id = parseInt($(this).parent().attr("id").substr(2));
+		expandedGroups.push(id);
+	});
+
+	$.cookie(EXPANDED_GROUPS_COOKIE, expandedGroups, COOKIE_EXPIRE);
+}
+
+function toggleMarketGroup(group) {
+	var nextMarketGroup = $(group).next(".market-group");
+	var marketTree = $("#market-tree");
+	nextMarketGroup.toggle();
+	$(".toggle", group).toggleClass("expand collapse");
+
+	// If we expanded the group, let's see if we need to scroll to it. We only
+	// need to do it in case the group is taller than the container.
+	if (nextMarketGroup.is(":visible")) {
+		var top = $(group).offset().top - marketTree.offset().top;
+		var height = top + nextMarketGroup.outerHeight() + $(group).outerHeight();
+		if (height > marketTree.height())
+			marketTree.scrollTop(marketTree.scrollTop() + top);
+	} else {
+		// We collapsed this group, so let's collapse all subgroups.
+		$(".toggle.collapse", nextMarketGroup).toggleClass("expand collapse");
+		$(".market-group", nextMarketGroup).hide();
+	}
+}
 
