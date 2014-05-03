@@ -1,3 +1,11 @@
+#market-browser {
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 #search {
 	margin: 0 5px;
 	position: relative;
