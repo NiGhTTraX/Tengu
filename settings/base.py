@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'dogma',
     'inv',
     'ui.items_box',
-    'ui.market_tree',
+    'ui.market_browser',
     'ui.wheel',
     'ui.main',
     'service',
