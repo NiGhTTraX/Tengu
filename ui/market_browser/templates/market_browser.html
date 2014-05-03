@@ -1,0 +1,15 @@
+<div id="market-tree" class="eve-box">
+  <div id="market-items" class="tab-content" style="display:none">
+    {% include "market_tree.html" with marketTree=itemsTree %}
+  </div>
+  <div id="market-ships" class="tab-content">
+    {% include "market_tree.html" with marketTree=shipsTree %}
+  </div>
+</div>
+
+<div id="resize-handle" class="draggable ui-widget-content">&nbsp;</div>
+
+<div id="search-results" class="eve-box">
+  <div id="search-items" class="tab-content" style="display: none"></div>
+  <div id="search-ships" class="tab-content"></div>
+</div>
